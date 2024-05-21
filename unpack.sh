@@ -1,5 +1,5 @@
 #!/bin/bash
-# Made by GPT-4o
+# GPT
 
 # Check if exactly two arguments are passed
 if [ "$#" -ne 2 ]; then
@@ -23,9 +23,9 @@ if [ ! -d "$target_dir" ]; then
 fi
 
 # Create soft links for all files and directories from source_dir to target_dir
-for item in "$source_dir"/* "$source_dir"/.*; do
-    # Skip the special directories . and ..
-    if [ "$item" != "$source_dir/." ] && [ "$item" != "$source_dir/.." ]; then
+for item in "$source_dir"/* "$source_dir"/.[!.]* "$source_dir"/..?*; do
+    # Check if the item exists
+    if [ -e "$item" ]; then
         ln -s "$item" "$target_dir"
     fi
 done
