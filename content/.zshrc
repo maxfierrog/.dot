@@ -12,7 +12,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
 fi
 
 # Theme to load
-ZSH_THEME=".powerlevel10k/powerlevel10k"
+ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # If it exists, run the contents of ~/.p10k.zsh (p10k theme settings)
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -23,14 +23,6 @@ ZSH_THEME=".powerlevel10k/powerlevel10k"
 #
 ############################################
 
-# Download Znap, if it's not there yet.
-[[ -r ~/.zsh_plugins/znap/znap.zsh ]] ||
-    git clone --depth 1 -- \
-        https://github.com/marlonrichert/zsh-snap.git ~/.zsh_plugins/znap
-
-# Start znap
-source ~/.zsh_plugins/znap/znap.zsh
-
 # Path to oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -39,7 +31,6 @@ source $ZSH/oh-my-zsh.sh
 
 # Plugins
 plugins=(git)
-znap source zsh-users/zsh-syntax-highlighting
 
 # Set default editor to nvim
 export EDITOR='nvim'
@@ -77,3 +68,13 @@ alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
 
 # Nicer ytop theme
 alias ytop="ytop -as -c monokai -I 1/4"
+
+############################################
+#
+#              Syntax Highlighting 
+#
+############################################
+
+# If this fails, brew install zsh-syntax-highlighting
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
