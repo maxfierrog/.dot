@@ -1,9 +1,6 @@
-[submodule "content/.powerlevel10k"]
-	path = content/.powerlevel10k
-	url = https://github.com/romkatv/powerlevel10k.git
-[submodule "content/.zsh_plugins/znap"]
-	path = content/.zsh_plugins/znap
-	url = https://github.com/marlonrichert/zsh-snap.git
 [submodule "content/.zsh_plugins/zsh-users/zsh-syntax-highlighting"]
 	path = content/.zsh_plugins/zsh-users/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "content/.oh-my-zsh"]
+	path = content/.oh-my-zsh
+	url = https://github.com/ohmyzsh/ohmyzsh.git
