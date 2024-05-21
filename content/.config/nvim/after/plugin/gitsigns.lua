@@ -1,12 +1,5 @@
 local gsn = require('gitsigns')
 
-vim.cmd('highlight GitSignsAdd guibg=NONE')
-vim.cmd('highlight GitSignsChange guibg=NONE')
-vim.cmd('highlight GitSignsDelete guibg=NONE')
-vim.cmd('highlight GitSignsChangeDelete guibg=NONE')
-vim.cmd('highlight GitSignsUntracked guibg=NONE')
-vim.cmd('highlight GitSignsTopDelete guibg=NONE')
-
 gsn.setup({
 	signs                             = {
 		add          = { text = '┃' },
@@ -91,5 +84,12 @@ gsn.setup({
 
 		-- Text object
 		map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+
+		vim.cmd('highlight GitSignsAdd guibg=NONE')
+		vim.cmd('highlight GitSignsChange guibg=NONE')
+		vim.cmd('highlight GitSignsDelete guibg=NONE')
+		vim.cmd('highlight GitSignsChangeDelete guibg=NONE')
+		vim.cmd('highlight GitSignsUntracked guibg=NONE')
+		vim.cmd('highlight GitSignsTopDelete guibg=NONE')
 	end
 })

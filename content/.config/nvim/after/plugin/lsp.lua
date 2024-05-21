@@ -84,13 +84,11 @@ msn_lsp_cfg.setup({
 		'clangd',
 		'pylsp',
 		'marksman',
-		'autotools_ls',
 		'lua_ls',
 		'texlab',
 		'bashls',
 		'yamlls',
 		'taplo',
-		'sqls'
 	},
 	automatic_installation = { exclude = { 'rust_analyzer' } },
 	handlers = {
