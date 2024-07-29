@@ -37,7 +37,7 @@ nvt.setup({
 		group_empty = true,
 	},
 	filters = {
-		dotfiles = true,
+		dotfiles = false,
 	},
 	on_attach = custom_on_attach,
 })
