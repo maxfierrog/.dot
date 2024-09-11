@@ -168,42 +168,50 @@ ls.add_snippets("tex", {
 	s({
 		trig = "//",
 		name = "fraction",
+		trigEngine = "vim",
+		wordTrig = false,
 	}, {
 		t("\\frac{ "), i(1), t(" }{ "), i(2), t(" }"), i(0)
 	}),
 	s({
 		trig = "sp",
 		name = "superscript",
+		wordTrig = false,
 	}, {
 		t("^{ "), i(1), t(" }"), i(0)
 	}),
 	s({
 		trig = "sb",
 		name = "subscript",
+		wordTrig = false,
 	}, {
 		t("_{ "), i(1), t(" }"), i(0)
 	}),
 	s({
 		trig = "ig",
 		name = "integral",
+		wordTrig = false,
 	}, {
 		t("\\int"), i(0)
 	}),
 	s({
 		trig = "par",
 		name = "parentheses",
+		wordTrig = false,
 	}, {
 		t("\\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "br",
 		name = "brackets",
+		wordTrig = false,
 	}, {
 		t("\\left[ "), i(1), t(" \\right]"), i(0)
 	}),
 	s({
 		trig = "beg",
 		name = "environment",
+		wordTrig = false,
 	}, {
 		t("\\begin{"), i(1), t({ "}", "" }),
 		i(2),
@@ -213,324 +221,378 @@ ls.add_snippets("tex", {
 	s({
 		trig = "im",
 		name = "inline math",
+		wordTrig = false,
 	}, {
 		t("$ "), i(1), t(" $"), i(0)
 	}),
 	s({
 		trig = "dm",
 		name = "display math",
+		wordTrig = false,
 	}, {
 		t({ "\\[", "", "" }), i(1), t({ "", "", "\\]", "" }), i(0)
 	}),
 	s({
 		trig = "vec",
 		name = "vector",
+		wordTrig = false,
 	}, {
 		t("\\vec{"), i(1), t("}"), i(0)
 	}),
 	s({
 		trig = "!>",
 		name = "maps to",
+		wordTrig = false,
 	}, {
 		t("\\mapsto"), i(0)
 	}),
 	s({
 		trig = "->",
 		name = "to",
+		wordTrig = false,
 	}, {
 		t("\\to"), i(0)
 	}),
 	s({
 		trig = "pi",
 		name = "constant pi",
+		wordTrig = false,
 	}, {
 		t("\\pi"), i(0)
 	}),
 	s({
 		trig = "re",
 		name = "set of real numbers",
+		wordTrig = false,
 	}, {
 		t("\\mathbb{R}"), i(0)
 	}),
 	s({
 		trig = "zz",
 		name = "set of integers",
+		wordTrig = false,
 	}, {
 		t("\\mathbb{Z}"), i(0)
 	}),
 	s({
 		trig = "SSS",
 		name = "strict subset",
+		wordTrig = false,
 	}, {
 		t("\\subset"), i(0)
 	}),
 	s({
 		trig = "SS",
 		name = "subset",
+		wordTrig = false,
 	}, {
 		t("\\subseteq"), i(0)
 	}),
 	s({
 		trig = "pa",
 		name = "partial derivative",
+		wordTrig = false,
 	}, {
 		t("\\partial"), i(0)
 	}),
 	s({
 		trig = "dots",
 		name = "dots",
+		wordTrig = false,
 	}, {
 		t("\\dots"), i(0)
 	}),
 	s({
 		trig = "ss",
 		name = "set",
+		wordTrig = false,
 	}, {
 		t("\\{ "), i(1), t(" \\}"), i(0)
 	}),
 	s({
 		trig = "ex",
 		name = "exponential",
+		wordTrig = false,
 	}, {
 		t("\\exp"), i(0)
 	}),
 	s({
 		trig = "ww",
 		name = "inline text",
+		wordTrig = false,
 	}, {
 		t("\\text{"), i(1), t("}"), i(0)
 	}),
 	s({
 		trig = "tt",
 		name = "transpose",
+		wordTrig = false,
 	}, {
 		t("^\\top"), i(0)
 	}),
 	s({
 		trig = "cp",
 		name = "cross product",
+		wordTrig = false,
 	}, {
 		t("\\times"), i(0)
 	}),
 	s({
 		trig = ">=",
 		name = "greater than or equal",
+		wordTrig = false,
 	}, {
 		t("\\geq"), i(0)
 	}),
 	s({
 		trig = "<=",
 		name = "less than or equal",
+		wordTrig = false,
 	}, {
 		t("\\leq"), i(0)
 	}),
 	s({
 		trig = "ip",
 		name = "inner product",
+		wordTrig = false,
 	}, {
 		t("\\langle "), i(1), t(", "), i(2), t(" \\rangle"), i(0)
 	}),
 	s({
 		trig = "nr",
 		name = "norm",
+		wordTrig = false,
 	}, {
 		t("\\| "), i(1), t(" \\|"), i(0)
 	}),
 	s({
 		trig = "su",
 		name = "sum",
+		wordTrig = false,
 	}, {
 		t("\\sum"), i(0)
 	}),
 	s({
 		trig = "sr",
 		name = "squre root",
+		wordTrig = false,
 	}, {
 		t("\\sqrt{ "), i(1), t(" }"), i(0)
 	}),
 	s({
 		trig = "sq",
 		name = "square",
+		wordTrig = false,
 	}, {
 		t("^2"), i(0)
 	}),
 	s({
 		trig = "cb",
 		name = "cube",
+		wordTrig = false,
 	}, {
 		t("^3"), i(0)
 	}),
 	s({
 		trig = "lambda",
 		name = "lambda",
+		wordTrig = false,
 	}, {
-		t("\\lambda"), i(0)
+		t("{\\lambda}"), i(0)
 	}),
 	s({
 		trig = "sigma",
 		name = "lambda",
+		wordTrig = false,
 	}, {
-		t("\\sigma"), i(0)
+		t("{\\sigma}"), i(0)
 	}),
 	s({
 		trig = "sin",
 		name = "sine function",
+		wordTrig = false,
 	}, {
 		t("\\sin \\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "cos",
 		name = "cosine function",
+		wordTrig = false,
 	}, {
 		t("\\cos \\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "tan",
 		name = "tangent function",
+		wordTrig = false,
 	}, {
 		t("\\tan \\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "alpha",
 		name = "alpha",
+		wordTrig = false,
 	}, {
-		t("\\alpha"), i(0)
+		t("{\\alpha}"), i(0)
 	}),
 	s({
 		trig = "beta",
 		name = "beta",
+		wordTrig = false,
 	}, {
-		t("\\beta"), i(0)
+		t("{\\beta}"), i(0)
 	}),
 	s({
 		trig = "ln",
 		name = "natural logarithm",
+		wordTrig = false,
 	}, {
 		t("\\ln \\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "nabla",
 		name = "nabla",
+		wordTrig = false,
 	}, {
-		t("\\nabla"), i(0)
+		t("{\\nabla}"), i(0)
 	}),
 	s({
 		trig = "mu",
 		name = "mu",
+		wordTrig = false,
 	}, {
-		t("\\mu"), i(0)
+		t("{\\mu}"), i(0)
 	}),
 	s({
 		trig = "theta",
 		name = "theta",
+		wordTrig = false,
 	}, {
-		t("\\theta"), i(0)
+		t("{\\theta}"), i(0)
 	}),
 	s({
 		trig = "dot",
 		name = "dot product",
+		wordTrig = false,
 	}, {
-		t("\\cdot"), i(0)
+		t("{\\cdot}"), i(0)
 	}),
 	s({
 		trig = "union",
 		name = "set union",
+		wordTrig = false,
 	}, {
 		t("\\cap"), i(0)
 	}),
 	s({
 		trig = "inter",
 		name = "set intersection",
+		wordTrig = false,
 	}, {
 		t("\\cup"), i(0)
 	}),
 	s({
 		trig = "inf",
 		name = "infinity",
+		wordTrig = false,
 	}, {
 		t("\\infty"), i(0)
 	}),
 	s({
 		trig = "exp",
 		name = "expectation",
+		wordTrig = false,
 	}, {
 		t("\\mathbb{E} \\left[ "), i(1), t(" \\right]"), i(0)
 	}),
 	s({
 		trig = "prob",
 		name = "probability",
+		wordTrig = false,
 	}, {
 		t("\\mathbb{P} \\left[ "), i(1), t(" \\right]"), i(0)
 	}),
 	s({
 		trig = "sim",
 		name = "similar distribution",
+		wordTrig = false,
 	}, {
-		t("\\sim"), i(0)
+		t("{\\sim}"), i(0)
 	}),
 	s({
 		trig = "fa",
 		name = "absolute quantifier",
+		wordTrig = false,
 	}, {
 		t("\\forall"), i(0)
 	}),
 	s({
 		trig = "exx",
 		name = "existential quantifier",
+		wordTrig = false,
 	}, {
 		t("\\exists"), i(0)
 	}),
 	s({
 		trig = "epsilon",
 		name = "epsilon",
+		wordTrig = false,
 	}, {
-		t("\\epsion"), i(0)
+		t("{\\epsion}"), i(0)
 	}),
 	s({
 		trig = "lim",
 		name = "limit",
+		wordTrig = false,
 	}, {
 		t("\\lim_{ "), i(1), t(" }"), i(0)
 	}),
 	s({
 		trig = "abs",
 		name = "absolute value",
+		wordTrig = false,
 	}, {
 		t("| "), i(1), t(" |"), i(0)
 	}),
 	s({
 		trig = "approx",
 		name = "approximation",
+		wordTrig = false,
 	}, {
-		t("\\approx"), i(0)
+		t("{\\approx}"), i(0)
 	}),
 	s({
 		trig = "cal",
 		name = "caligraphy",
+		wordTrig = false,
 	}, {
 		t("\\mathcal{"), i(1), t("}"), i(0)
 	}),
 	s({
 		trig = "cov",
 		name = "covariance",
+		wordTrig = false,
 	}, {
 		t("\\text{Cov} \\left( "), i(1), t(", "), i(2), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "var",
 		name = "variance",
+		wordTrig = false,
 	}, {
 		t("\\text{Var} \\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
 		trig = "phi",
 		name = "phi",
+		wordTrig = false,
 	}, {
-		t("\\phi"), i(0)
+		t("{\\phi}"), i(0)
 	}),
 	s({
 		trig = "imp",
 		name = "implication",
+		wordTrig = false,
 	}, {
 		t("\\implies"), i(0)
 	})

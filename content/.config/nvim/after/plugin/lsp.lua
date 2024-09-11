@@ -23,7 +23,7 @@ end)
 
 cmp.setup({
 	sources = {
-		{ name = 'luasnip',                 priority = 60, max_item_count = 1, keyword_length = 1 },
+		{ name = 'luasnip',                 priority = 60, max_item_count = 3, keyword_length = 1 },
 		{ name = 'nvim_lsp',                priority = 60, max_item_count = 3, keyword_length = 1 },
 		{ name = 'nvim_lsp_signature_help', priority = 50, max_item_count = 3, keyword_length = 3 },
 		{ name = 'buffer',                  priority = 10, max_item_count = 1, keyword_length = 3 },
@@ -39,24 +39,19 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = {
+
 		['<CR>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				if ls.expandable() then
-					ls.expand()
-				else
-					cmp.confirm({
-						select = true,
-					})
-				end
+				cmp.confirm({
+					select = true,
+				})
 			else
 				fallback()
 			end
 		end),
 
 		["<Tab>"] = cmp.mapping(function(fallback)
-			if cmp.visible() then
-				cmp.select_next_item()
-			elseif ls.locally_jumpable(1) then
+			if ls.locally_jumpable(1) then
 				ls.jump(1)
 			else
 				fallback()
@@ -65,7 +60,7 @@ cmp.setup({
 
 		["<S-Tab>"] = cmp.mapping(function(fallback)
 			if cmp.visible() then
-				cmp.select_prev_item()
+				cmp.select_next_item()
 			elseif ls.locally_jumpable(-1) then
 				ls.jump(-1)
 			else
