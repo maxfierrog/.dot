@@ -3,6 +3,7 @@ local cmp_action = require('lsp-zero').cmp_action()
 local lsp = require('lsp-zero')
 local msn = require('mason')
 local cmp = require('cmp')
+local ls = require('luasnip')
 local hl = vim.api.nvim_set_hl
 
 lsp.on_attach(function(client, bufnr)
@@ -11,7 +12,6 @@ lsp.on_attach(function(client, bufnr)
 	lsp.buffer_autoformat()
 	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
 	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "<leader>vs", function() vim.lsp.buf.workspace_symbol() end, opts)
 	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
 	vim.keymap.set("n", "<leader>va", function() vim.lsp.buf.code_action() end, opts)
 	vim.keymap.set("n", "<leader>vrf", function() vim.lsp.buf.references() end, opts)
@@ -23,10 +23,10 @@ end)
 
 cmp.setup({
 	sources = {
-		{ name = 'vsnip',                   priority = 60, max_item_count = 1, keyword_length = 1 },
+		{ name = 'luasnip',                 priority = 60, max_item_count = 1, keyword_length = 1 },
 		{ name = 'nvim_lsp',                priority = 60, max_item_count = 3, keyword_length = 1 },
 		{ name = 'nvim_lsp_signature_help', priority = 50, max_item_count = 3, keyword_length = 3 },
-		{ name = 'buffer',                  priority = 40, max_item_count = 1, keyword_length = 3 },
+		{ name = 'buffer',                  priority = 10, max_item_count = 1, keyword_length = 3 },
 		{ name = 'path',                    priority = 10, max_item_count = 1, keyword_length = 1 },
 		{ name = 'calc',                    priority = 10, max_item_count = 1, keyword_length = 1 },
 	},
@@ -39,13 +39,50 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = {
-		['<Tab>'] = cmp_action.luasnip_supertab(),
-		['<S-Tab>'] = cmp_action.luasnip_shift_supertab(),
-		['<CR>'] = cmp.mapping.confirm({ select = false }),
+		['<CR>'] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				if ls.expandable() then
+					ls.expand()
+				else
+					cmp.confirm({
+						select = true,
+					})
+				end
+			else
+				fallback()
+			end
+		end),
+
+		["<Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_next_item()
+			elseif ls.locally_jumpable(1) then
+				ls.jump(1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<S-Tab>"] = cmp.mapping(function(fallback)
+			if cmp.visible() then
+				cmp.select_prev_item()
+			elseif ls.locally_jumpable(-1) then
+				ls.jump(-1)
+			else
+				fallback()
+			end
+		end, { "i", "s" }),
+
+		["<Space>"] = cmp.mapping(function(fallback)
+			if ls.expandable() then
+				ls.expand()
+			end
+			fallback()
+		end, { "i", "s" }),
 	},
 	snippet = {
 		expand = function(args)
-			require('luasnip').lsp_expand(args.body)
+			ls.lsp_expand(args.body)
 		end,
 	},
 	formatting = {
@@ -53,7 +90,7 @@ cmp.setup({
 		format = function(entry, item)
 			local menu_icon = {
 				nvim_lsp = 'λ',
-				vsnip = 'σ',
+				luasnip = 'σ',
 				buffer = 'β',
 				path = 'π',
 				calc = 'γ',

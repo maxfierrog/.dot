@@ -8,6 +8,7 @@ tsr.setup({
 		enable = true,
 		disable = { "latex" },
 	},
+	indent = false,
 	ident = { enable = true },
 	rainbow = {
 		enable = true,

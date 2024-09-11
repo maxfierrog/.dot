@@ -2,9 +2,14 @@ require("maxfierro.remap")
 
 vim.cmd('highlight ColorColumn guibg=red')
 vim.cmd('call matchadd(\'ColorColumn\', \'\\%81v\', 100)')
+
 vim.cmd('set tabstop=4')
 vim.cmd('set softtabstop=0')
 vim.cmd('set shiftwidth=0')
+
+vim.opt.spelllang = 'en_us'
+vim.opt.spell = true
+
 vim.diagnostic.config({
 	virtual_text = false,
 	signs = true,
