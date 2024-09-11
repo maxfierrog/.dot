@@ -261,14 +261,14 @@ ls.add_snippets("tex", {
 		t("\\pi"), i(0)
 	}),
 	s({
-		trig = "re",
+		trig = "RR",
 		name = "set of real numbers",
 		wordTrig = false,
 	}, {
 		t("\\mathbb{R}"), i(0)
 	}),
 	s({
-		trig = "zz",
+		trig = "ZZ",
 		name = "set of integers",
 		wordTrig = false,
 	}, {
