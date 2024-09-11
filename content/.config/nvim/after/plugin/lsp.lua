@@ -113,6 +113,9 @@ hl(0, "DiagnosticSignWarn", { fg = "#FF9903", bg = NONE })
 msn.setup()
 
 msn_lsp_cfg.setup({
+	setup_handlers = {
+		['rust_analyzer'] = function() end,
+	},
 	ensure_installed = {
 		'clangd',
 		'pylsp',
@@ -123,10 +126,11 @@ msn_lsp_cfg.setup({
 		'yamlls',
 		'taplo',
 	},
-	automatic_installation = { exclude = { 'rust_analyzer' } },
 	handlers = {
 		function(server_name)
-			require('lspconfig')[server_name].setup({})
+			if server_name ~= 'rust_analyzer' then
+				require('lspconfig')[server_name].setup({})
+			end
 		end,
 	}
 })

@@ -499,7 +499,7 @@ ls.add_snippets("tex", {
 		t("\\infty"), i(0)
 	}),
 	s({
-		trig = "exp",
+		trig = "epn",
 		name = "expectation",
 		wordTrig = false,
 	}, {
