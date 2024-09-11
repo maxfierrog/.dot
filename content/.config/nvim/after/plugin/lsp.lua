@@ -76,8 +76,9 @@ cmp.setup({
 		["<Space>"] = cmp.mapping(function(fallback)
 			if ls.expandable() then
 				ls.expand()
+			else
+				fallback()
 			end
-			fallback()
 		end, { "i", "s" }),
 	},
 	snippet = {

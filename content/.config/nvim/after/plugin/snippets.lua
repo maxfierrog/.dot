@@ -99,7 +99,7 @@ vim.api.nvim_set_keymap('s', "<C-k>", '<cmd>lua _G.dynamic_node_external_update(
 
 -- BEGIN SNIPPETS
 
-ls.add_snippets("md", {
+ls.add_snippets("markdown", {
 	s({ trig = "katex", name = "Katex shortcode" }, {
 		t("{{< katex "),
 		i(1, "inline"),
@@ -119,10 +119,9 @@ ls.add_snippets("md", {
 })
 
 ls.add_snippets("tex", {
-	-- Growable matrix / table
 	s({
 		trig = "mat",
-		name = "matrix",
+		name = "variadic matrix",
 	}, {
 		t("\\begin{"), i(1), t({ "}", "" }),
 		d(2, function(_, snip)
@@ -173,19 +172,19 @@ ls.add_snippets("tex", {
 		t("\\frac{ "), i(1), t(" }{ "), i(2), t(" }"), i(0)
 	}),
 	s({
-		trig = "sup",
+		trig = "sp",
 		name = "superscript",
 	}, {
 		t("^{ "), i(1), t(" }"), i(0)
 	}),
 	s({
-		trig = "sub",
+		trig = "sb",
 		name = "subscript",
 	}, {
 		t("_{ "), i(1), t(" }"), i(0)
 	}),
 	s({
-		trig = "int",
+		trig = "ig",
 		name = "integral",
 	}, {
 		t("\\int"), i(0)
@@ -197,7 +196,7 @@ ls.add_snippets("tex", {
 		t("\\left( "), i(1), t(" \\right)"), i(0)
 	}),
 	s({
-		trig = "bra",
+		trig = "br",
 		name = "brackets",
 	}, {
 		t("\\left[ "), i(1), t(" \\right]"), i(0)
@@ -212,7 +211,7 @@ ls.add_snippets("tex", {
 		i(0)
 	}),
 	s({
-		trig = "mk",
+		trig = "im",
 		name = "inline math",
 	}, {
 		t("$ "), i(1), t(" $"), i(0)
@@ -254,19 +253,19 @@ ls.add_snippets("tex", {
 		t("\\mathbb{R}"), i(0)
 	}),
 	s({
-		trig = "za",
+		trig = "zz",
 		name = "set of integers",
 	}, {
 		t("\\mathbb{Z}"), i(0)
 	}),
 	s({
-		trig = "sss",
+		trig = "SSS",
 		name = "strict subset",
 	}, {
 		t("\\subset"), i(0)
 	}),
 	s({
-		trig = "ss",
+		trig = "SS",
 		name = "subset",
 	}, {
 		t("\\subseteq"), i(0)
@@ -284,13 +283,13 @@ ls.add_snippets("tex", {
 		t("\\dots"), i(0)
 	}),
 	s({
-		trig = "SS",
+		trig = "ss",
 		name = "set",
 	}, {
 		t("\\{ "), i(1), t(" \\}"), i(0)
 	}),
 	s({
-		trig = "exp",
+		trig = "ex",
 		name = "exponential",
 	}, {
 		t("\\exp"), i(0)
@@ -301,6 +300,240 @@ ls.add_snippets("tex", {
 	}, {
 		t("\\text{"), i(1), t("}"), i(0)
 	}),
+	s({
+		trig = "tt",
+		name = "transpose",
+	}, {
+		t("^\\top"), i(0)
+	}),
+	s({
+		trig = "cp",
+		name = "cross product",
+	}, {
+		t("\\times"), i(0)
+	}),
+	s({
+		trig = ">=",
+		name = "greater than or equal",
+	}, {
+		t("\\geq"), i(0)
+	}),
+	s({
+		trig = "<=",
+		name = "less than or equal",
+	}, {
+		t("\\leq"), i(0)
+	}),
+	s({
+		trig = "ip",
+		name = "inner product",
+	}, {
+		t("\\langle "), i(1), t(", "), i(2), t(" \\rangle"), i(0)
+	}),
+	s({
+		trig = "nr",
+		name = "norm",
+	}, {
+		t("\\| "), i(1), t(" \\|"), i(0)
+	}),
+	s({
+		trig = "su",
+		name = "sum",
+	}, {
+		t("\\sum"), i(0)
+	}),
+	s({
+		trig = "sr",
+		name = "squre root",
+	}, {
+		t("\\sqrt{ "), i(1), t(" }"), i(0)
+	}),
+	s({
+		trig = "sq",
+		name = "square",
+	}, {
+		t("^2"), i(0)
+	}),
+	s({
+		trig = "cb",
+		name = "cube",
+	}, {
+		t("^3"), i(0)
+	}),
+	s({
+		trig = "lambda",
+		name = "lambda",
+	}, {
+		t("\\lambda"), i(0)
+	}),
+	s({
+		trig = "sigma",
+		name = "lambda",
+	}, {
+		t("\\sigma"), i(0)
+	}),
+	s({
+		trig = "sin",
+		name = "sine function",
+	}, {
+		t("\\sin \\left( "), i(1), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "cos",
+		name = "cosine function",
+	}, {
+		t("\\cos \\left( "), i(1), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "tan",
+		name = "tangent function",
+	}, {
+		t("\\tan \\left( "), i(1), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "alpha",
+		name = "alpha",
+	}, {
+		t("\\alpha"), i(0)
+	}),
+	s({
+		trig = "beta",
+		name = "beta",
+	}, {
+		t("\\beta"), i(0)
+	}),
+	s({
+		trig = "ln",
+		name = "natural logarithm",
+	}, {
+		t("\\ln \\left( "), i(1), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "nabla",
+		name = "nabla",
+	}, {
+		t("\\nabla"), i(0)
+	}),
+	s({
+		trig = "mu",
+		name = "mu",
+	}, {
+		t("\\mu"), i(0)
+	}),
+	s({
+		trig = "theta",
+		name = "theta",
+	}, {
+		t("\\theta"), i(0)
+	}),
+	s({
+		trig = "dot",
+		name = "dot product",
+	}, {
+		t("\\cdot"), i(0)
+	}),
+	s({
+		trig = "union",
+		name = "set union",
+	}, {
+		t("\\cap"), i(0)
+	}),
+	s({
+		trig = "inter",
+		name = "set intersection",
+	}, {
+		t("\\cup"), i(0)
+	}),
+	s({
+		trig = "inf",
+		name = "infinity",
+	}, {
+		t("\\infty"), i(0)
+	}),
+	s({
+		trig = "exp",
+		name = "expectation",
+	}, {
+		t("\\mathbb{E} \\left[ "), i(1), t(" \\right]"), i(0)
+	}),
+	s({
+		trig = "prob",
+		name = "probability",
+	}, {
+		t("\\mathbb{P} \\left[ "), i(1), t(" \\right]"), i(0)
+	}),
+	s({
+		trig = "sim",
+		name = "similar distribution",
+	}, {
+		t("\\sim"), i(0)
+	}),
+	s({
+		trig = "fa",
+		name = "absolute quantifier",
+	}, {
+		t("\\forall"), i(0)
+	}),
+	s({
+		trig = "exx",
+		name = "existential quantifier",
+	}, {
+		t("\\exists"), i(0)
+	}),
+	s({
+		trig = "epsilon",
+		name = "epsilon",
+	}, {
+		t("\\epsion"), i(0)
+	}),
+	s({
+		trig = "lim",
+		name = "limit",
+	}, {
+		t("\\lim_{ "), i(1), t(" }"), i(0)
+	}),
+	s({
+		trig = "abs",
+		name = "absolute value",
+	}, {
+		t("| "), i(1), t(" |"), i(0)
+	}),
+	s({
+		trig = "approx",
+		name = "approximation",
+	}, {
+		t("\\approx"), i(0)
+	}),
+	s({
+		trig = "cal",
+		name = "caligraphy",
+	}, {
+		t("\\mathcal{"), i(1), t("}"), i(0)
+	}),
+	s({
+		trig = "cov",
+		name = "covariance",
+	}, {
+		t("\\text{Cov} \\left( "), i(1), t(", "), i(2), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "var",
+		name = "variance",
+	}, {
+		t("\\text{Var} \\left( "), i(1), t(" \\right)"), i(0)
+	}),
+	s({
+		trig = "phi",
+		name = "phi",
+	}, {
+		t("\\phi"), i(0)
+	}),
+	s({
+		trig = "imp",
+		name = "implication",
+	}, {
+		t("\\implies"), i(0)
+	})
 })
 
 ls.setup({
