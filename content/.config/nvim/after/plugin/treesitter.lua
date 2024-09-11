@@ -6,6 +6,7 @@ tsr.setup({
 	auto_install = true,
 	highlight = {
 		enable = true,
+		disable = { "latex" },
 	},
 	ident = { enable = true },
 	rainbow = {
