@@ -119,6 +119,11 @@ _G.packer_plugins = {
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/gitsigns.nvim",
     url = "https://github.com/lewis6991/gitsigns.nvim"
   },
+  ["gv.vim"] = {
+    loaded = true,
+    path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/gv.vim",
+    url = "https://github.com/junegunn/gv.vim"
+  },
   ["kanagawa.nvim"] = {
     loaded = true,
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/kanagawa.nvim",
@@ -213,11 +218,6 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/undotree",
     url = "https://github.com/mbbill/undotree"
-  },
-  ["vim-flog"] = {
-    loaded = true,
-    path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/vim-flog",
-    url = "https://github.com/rbong/vim-flog"
   },
   ["vim-fugitive"] = {
     loaded = true,

@@ -14,7 +14,7 @@ return require('packer').startup(function(use)
 	use 'rebelot/kanagawa.nvim'
 	use 'mrcjkb/rustaceanvim'
 	use 'tpope/vim-fugitive'
-	use 'rbong/vim-flog'
+	use 'junegunn/gv.vim'
 	use 'myusuf3/numbers.vim'
 	use 'nvim-lualine/lualine.nvim'
 	use 'lewis6991/gitsigns.nvim'

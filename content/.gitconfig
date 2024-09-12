@@ -7,3 +7,6 @@
 [user]
 	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAILJk9SLwHFOxXMUx4xLDJM/7oQ7B++gafsHYNKf8AUJM
 	email = maxfierro@berkeley.edu
+	name = Max Fierro
+[tag]
+	forceSignAnnotated = true

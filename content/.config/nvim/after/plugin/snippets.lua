@@ -1,30 +1,11 @@
 local ls = require("luasnip")
 local s = ls.snippet
 local sn = ls.snippet_node
-local isn = ls.indent_snippet_node
 local t = ls.text_node
 local i = ls.insert_node
 local f = ls.function_node
-local c = ls.choice_node
 local d = ls.dynamic_node
 local r = ls.restore_node
-local events = require("luasnip.util.events")
-local ai = require("luasnip.nodes.absolute_indexer")
-local extras = require("luasnip.extras")
-local l = extras.lambda
-local rep = extras.rep
-local p = extras.partial
-local m = extras.match
-local n = extras.nonempty
-local dl = extras.dynamic_lambda
-local fmt = require("luasnip.extras.fmt").fmt
-local fmta = require("luasnip.extras.fmt").fmta
-local conds = require("luasnip.extras.expand_conditions")
-local postfix = require("luasnip.extras.postfix").postfix
-local types = require("luasnip.util.types")
-local parse = require("luasnip.util.parser").parse_snippet
-local ms = ls.multi_snippet
-local k = require("luasnip.nodes.key_indexer").new_key
 local util = require("luasnip.util.util")
 local node_util = require("luasnip.nodes.util")
 
@@ -35,13 +16,20 @@ local external_update_id = 0
 local function find_dynamic_node(node)
 	while not node.dynamicNode do
 		node = node.parent
+		if node == nil then
+			return nil
+		end
 	end
+
 	return node.dynamicNode
 end
 
-function dynamic_node_external_update(func_indx)
+function Dynamic_node_external_update(func_indx)
 	local current_node = ls.session.current_nodes[vim.api.nvim_get_current_buf()]
 	local dynamic_node = find_dynamic_node(current_node)
+	if dynamic_node == nil then
+		return
+	end
 
 	external_update_id = external_update_id + 1
 	current_node.external_update_id = external_update_id
@@ -85,17 +73,17 @@ function dynamic_node_external_update(func_indx)
 	end
 end
 
-vim.api.nvim_set_keymap('i', "<C-l>", '<cmd>lua _G.dynamic_node_external_update(1)<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('s', "<C-l>", '<cmd>lua _G.dynamic_node_external_update(1)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('i', "<C-l>", '<cmd>lua _G.Dynamic_node_external_update(1)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('s', "<C-l>", '<cmd>lua _G.Dynamic_node_external_update(1)<Cr>', { noremap = true })
 
-vim.api.nvim_set_keymap('i', "<C-h>", '<cmd>lua _G.dynamic_node_external_update(2)<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('s', "<C-h>", '<cmd>lua _G.dynamic_node_external_update(2)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('i', "<C-h>", '<cmd>lua _G.Dynamic_node_external_update(2)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('s', "<C-h>", '<cmd>lua _G.Dynamic_node_external_update(2)<Cr>', { noremap = true })
 
-vim.api.nvim_set_keymap('i', "<C-j>", '<cmd>lua _G.dynamic_node_external_update(3)<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('s', "<C-j>", '<cmd>lua _G.dynamic_node_external_update(3)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('i', "<C-j>", '<cmd>lua _G.Dynamic_node_external_update(3)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('s', "<C-j>", '<cmd>lua _G.Dynamic_node_external_update(3)<Cr>', { noremap = true })
 
-vim.api.nvim_set_keymap('i', "<C-k>", '<cmd>lua _G.dynamic_node_external_update(4)<Cr>', { noremap = true })
-vim.api.nvim_set_keymap('s', "<C-k>", '<cmd>lua _G.dynamic_node_external_update(4)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('i', "<C-k>", '<cmd>lua _G.Dynamic_node_external_update(4)<Cr>', { noremap = true })
+vim.api.nvim_set_keymap('s', "<C-k>", '<cmd>lua _G.Dynamic_node_external_update(4)<Cr>', { noremap = true })
 
 -- BEGIN SNIPPETS
 
