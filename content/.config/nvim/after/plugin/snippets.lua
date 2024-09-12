@@ -218,7 +218,7 @@ ls.add_snippets("tex", {
 		name = "display math",
 		wordTrig = false,
 	}, {
-		t({ "\\[", "", "" }), i(1), t({ "", "", "\\]", "" }), i(0)
+		t({ "\\[", "" }), i(1), t({ "", "\\]", "" }), i(0)
 	}),
 	s({
 		trig = "vec",
