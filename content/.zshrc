@@ -44,6 +44,9 @@ eval "$(/opt/homebrew/bin/brew shellenv)"
 # Add cargo-installed binaries to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Pull /usr/bin to front (brew fucks with this)
+export PATH="/usr/bin:$PATH"
+
 # Specify tempfile directory -- fixes OpenMPI shared memory initializaiton issues
 export TMPDIR=/tmp
 
