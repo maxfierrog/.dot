@@ -113,7 +113,10 @@ hl(0, "DiagnosticSignWarn", { fg = "#FF9903", bg = NONE })
 msn.setup()
 
 msn_lsp_cfg.setup({
-	setup_handlers = {
+	handlers = {
+		function(server_name)
+			require("lspconfig")[server_name].setup({})
+		end,
 		['rust_analyzer'] = function() end,
 	},
 	ensure_installed = {
@@ -126,13 +129,6 @@ msn_lsp_cfg.setup({
 		'yamlls',
 		'taplo',
 	},
-	handlers = {
-		function(server_name)
-			if server_name ~= 'rust_analyzer' then
-				require('lspconfig')[server_name].setup({})
-			end
-		end,
-	}
 })
 
 lsp.setup()
