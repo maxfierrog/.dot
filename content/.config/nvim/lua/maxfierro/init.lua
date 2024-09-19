@@ -17,3 +17,6 @@ vim.diagnostic.config({
 		prefix = '',
 	},
 })
+
+vim.cmd('set cc=81')
+vim.cmd('highlight ColorColumn ctermbg=grey')
