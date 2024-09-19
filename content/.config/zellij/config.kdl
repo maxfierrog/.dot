@@ -141,8 +141,9 @@ keybinds {
     }
     shared_except "locked" {
         bind "Ctrl g" { SwitchToMode "Locked"; }
-        bind "Ctrl q" { Quit; }
+        bind "Ctrl q" { Detach; }
         bind "Alt n" { NewPane; }
+        bind "Alt m" { ToggleFloatingPanes; }
         bind "Alt h" "Alt Left" { MoveFocusOrTab "Left"; }
         bind "Alt l" "Alt Right" { MoveFocusOrTab "Right"; }
         bind "Alt j" "Alt Down" { MoveFocus "Down"; }
@@ -240,7 +241,7 @@ themes {
  		bg "#476194"
  		black "#222222"
  		red "#222222"
- 		green "#9F4927"
+ 		green "#494949"
  		yellow "#222222"
  		blue "#3377FF"
  		magenta "#CC6688"
