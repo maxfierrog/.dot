@@ -270,7 +270,7 @@ ls.add_snippets("tex", {
 		t("\\subset"), i(0)
 	}),
 	s({
-		trig = "SS",
+		trig = "sss",
 		name = "subset",
 		wordTrig = false,
 	}, {
@@ -288,10 +288,10 @@ ls.add_snippets("tex", {
 		name = "dots",
 		wordTrig = false,
 	}, {
-		t("\\dots"), i(0)
+		t("{\\dots}"), i(0)
 	}),
 	s({
-		trig = "ss",
+		trig = "SS",
 		name = "set",
 		wordTrig = false,
 	}, {
@@ -340,11 +340,11 @@ ls.add_snippets("tex", {
 		t("\\leq"), i(0)
 	}),
 	s({
-		trig = "ip",
-		name = "inner product",
+		trig = "ang",
+		name = "angle brackets",
 		wordTrig = false,
 	}, {
-		t("\\langle "), i(1), t(", "), i(2), t(" \\rangle"), i(0)
+		t("\\langle "), i(1), t(" \\rangle"), i(0)
 	}),
 	s({
 		trig = "nr",

@@ -1,0 +1,75 @@
+\documentclass{tufte-handout}
+
+\usepackage{amsmath,amsfonts,amsthm, amssymb}
+\usepackage{fancyhdr}
+\usepackage{verbatim}
+
+\renewcommand{\headrulewidth}{0pt} 
+\renewcommand{\footrulewidth}{0pt}
+\allowdisplaybreaks
+
+\pagestyle{fancyplain}
+\fancyhead{}
+\fancyfoot[L]{}
+\fancyfoot[C]{}
+\fancyfoot[R]{\thepage}
+
+\newtheorem{thm}{Theorem}
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{facts}[thm]{Facts}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{clm}[thm]{Claim}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\geometry{
+	left=13mm, % left margin
+	textwidth=130mm, % main text block
+	marginparsep=8mm, % gutter between main text block and margin notes
+	marginparwidth=55mm % width of margin notes
+}
+\fontsize{10}{20}\selectfont
+
+
+% CONTENT
+
+% Menu:
+% \marginnote{ Puts this in the margin. }
+% \footnote{ Numbers this in the margin. }
+% \section{ Adds a section. }
+
+\title{	
+	\normalfont\normalsize 
+	{Location, Institution, etc.} \\ [0pt] % Your university, school and/or department name(s)
+	\huge Title
+}\author{Max Fierro}
+\date{\vspace{-5pt}\normalsize \today}
+
+\begin{document}
+\justifying 
+\maketitle
+\begin{abstract}
+	Abstract or summary.
+\end{abstract}
+\tableofcontents
+
+\end{document}
