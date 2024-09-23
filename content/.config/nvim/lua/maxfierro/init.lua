@@ -20,3 +20,4 @@ vim.diagnostic.config({
 
 vim.cmd('set cc=81')
 vim.cmd('highlight ColorColumn ctermbg=grey')
+vim.cmd('set clipboard=unnamedplus')
