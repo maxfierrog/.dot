@@ -69,6 +69,9 @@ alias todo="ultralist"
 # Use exa for listing
 alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
 
+# Editor
+alias zed="/Applications/Zed.app/Contents/MacOS/cli"
+
 # Nicer ytop theme
 alias ytop="ytop -as -c monokai -I 1/4"
 
