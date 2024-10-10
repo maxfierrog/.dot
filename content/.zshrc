@@ -47,6 +47,9 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Pull /usr/bin to front (brew fucks with this)
 export PATH="/usr/bin:$PATH"
 
+# Put pyenv shims up front.
+export PATH="$HOME/.pyenv/shims:$PATH"
+
 # Specify tempfile directory -- fixes OpenMPI shared memory initializaiton issues
 export TMPDIR=/tmp
 
