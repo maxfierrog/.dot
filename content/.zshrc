@@ -47,14 +47,16 @@ export PATH="$HOME/.cargo/bin:$PATH"
 # Pull /usr/bin to front (brew fucks with this)
 export PATH="/usr/bin:$PATH"
 
-# Put pyenv shims up front.
-export PATH="$HOME/.pyenv/shims:$PATH"
-
 # Specify tempfile directory -- fixes OpenMPI shared memory initializaiton issues
 export TMPDIR=/tmp
 
 # Set SSH authentication socket to 1Password provision
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
+
+# Set up pyenv
+export PYENV_ROOT="$HOME/.pyenv"
+[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
+eval "$(pyenv init -)"
 
 ############################################
 #
