@@ -58,6 +58,18 @@ export PYENV_ROOT="$HOME/.pyenv"
 [[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
 eval "$(pyenv init -)"
 
+# Pyenv virtual environments plugin
+eval "$(pyenv virtualenv-init -)"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+path=('/Users/maxfierro/.juliaup/bin' $path)
+export PATH
+
+# <<< juliaup initialize <<<
+#
 ############################################
 #
 #              Aliases

@@ -4,32 +4,36 @@
     "bindings": {
       "space s": "workspace::Save",
       "space f g": "workspace::NewSearch",
-      "space f i": "file_finder::Toggle",
       "space q": "pane::CloseActiveItem",
       "space v": "pane::SplitRight",
       "space d": "diagnostics::Deploy",
-      "space p": "workspace::ToggleRightDock",
+      "space p": "file_finder::Toggle",
       "shift-tab": "pane::ActivatePrevItem",
       "tab": "pane::ActivateNextItem",
+      "H": ["workspace::ActivatePaneInDirection", "Left"],
+      "L": ["workspace::ActivatePaneInDirection", "Right"],
+      "K": ["workspace::ActivatePaneInDirection", "Up"],
+      "J": ["workspace::ActivatePaneInDirection", "Down"],
       "M": "editor::Hover"
     }
   },
   {
-    "context": "Workspace && via_mode == normal && !menu",
+    "context": "VimControl && vim_mode != operator && !menu",
     "bindings": {
-      "H": ["workspace::ActivatePaneInDirection", "Left"],
-      "L": ["workspace::ActivatePaneInDirection", "Right"],
-      "K": ["workspace::ActivatePaneInDirection", "Up"],
-      "J": ["workspace::ActivatePaneInDirection", "Down"]
+      "shift-w": "vim::NextSubwordStart",
+      "shift-b": "vim::PreviousSubwordStart",
+      "shift-e": "vim::NextSubwordEnd"
     }
   },
   {
-    "context": "VimControl && !menu && vim_mode != operator",
+    "context": "Editor && jupyter && vim_mode == normal && !ContextEditor",
     "bindings": {
-      "w": "vim::NextSubwordStart",
-      "b": "vim::PreviousSubwordStart",
-      "e": "vim::NextSubwordEnd",
-      "g e": "vim::PreviousSubwordEnd"
+      "enter": "repl::RunInPlace",
+      "shift-enter": "repl::Run",
+      "backspace": "repl::ClearOutputs",
+      "shift-backspace": "repl::Restart",
+      "]": ["workspace::SendKeystrokes", "/ # space % % enter escape"],
+      "[": ["workspace::SendKeystrokes", "k / # space % % enter shift-n escape"]
     }
   }
 ]

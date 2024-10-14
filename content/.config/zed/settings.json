@@ -14,6 +14,10 @@
     "breadcrumbs": false,
     "quick_actions": false
   },
+  "auto_signature_help": true,
+  "wrap_guides": [80, 120],
+  "auto_update": true,
+  "vertical_scroll_margin": 10,
   "vim": {
     "toggle_relative_line_numbers": true,
     "use_system_clipboard": "always",
@@ -21,12 +25,14 @@
     "use_smartcase_find": false,
     "custom_digraphs": {}
   },
+  "preferred_line_length": 80,
   "current_line_highlight": "gutter",
+  "soft_wrap": "editor_width",
   "scrollbar": { "show": "never" },
   "theme": {
     "mode": "system",
-    "light": "macOS Classic Light",
-    "dark": "macOS Classic Dark"
+    "light": "Atelier Plateau Light",
+    "dark": "Tomorrow Night"
   },
   "project_panel": {
     "dock": "right"
