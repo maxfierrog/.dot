@@ -10,15 +10,14 @@ lsp.on_attach(function(client, bufnr)
 	local opts = { buffer = bufnr, remap = false }
 	lsp.default_keymaps({ buffer = bufnr })
 	lsp.buffer_autoformat()
-	vim.keymap.set("n", "gd", function() vim.lsp.buf.definition() end, opts)
-	vim.keymap.set("n", "K", function() vim.lsp.buf.hover() end, opts)
-	vim.keymap.set("n", "<leader>vd", function() vim.diagnostic.open_float() end, opts)
-	vim.keymap.set("n", "<leader>va", function() vim.lsp.buf.code_action() end, opts)
-	vim.keymap.set("n", "<leader>vrf", function() vim.lsp.buf.references() end, opts)
-	vim.keymap.set("n", "<leader>vre", function() vim.lsp.buf.rename() end, opts)
-	vim.keymap.set("n", "<leader>vsi", function() vim.lsp.buf.signature_help() end, opts)
-	vim.keymap.set("n", "]d", function() vim.diagnostic.goto_next() end, opts)
-	vim.keymap.set("n", "[d", function() vim.diagnostic.goto_prev() end, opts)
+	vim.keymap.set("n", "M", function() vim.lsp.buf.hover() end, opts)
+	vim.keymap.set("n", "m", function() vim.lsp.buf.code_action() end, opts)
+	vim.keymap.set("n", "<leader>d", function() vim.lsp.buf.definition() end, opts)
+	vim.keymap.set("n", "<leader>e", function() vim.diagnostic.open_float() end, opts)
+	vim.keymap.set("n", "<leader>r", function() vim.lsp.buf.rename() end, opts)
+	vim.keymap.set("n", "<leader>i", function() vim.lsp.buf.signature_help() end, opts)
+	vim.keymap.set("n", "]e", function() vim.diagnostic.goto_next() end, opts)
+	vim.keymap.set("n", "[e", function() vim.diagnostic.goto_prev() end, opts)
 end)
 
 cmp.setup({
@@ -39,7 +38,6 @@ cmp.setup({
 		documentation = cmp.config.window.bordered(),
 	},
 	mapping = {
-
 		['<CR>'] = cmp.mapping(function(fallback)
 			if cmp.visible() then
 				cmp.confirm({

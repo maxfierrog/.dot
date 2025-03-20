@@ -87,25 +87,6 @@ vim.api.nvim_set_keymap('s', "<C-k>", '<cmd>lua _G.Dynamic_node_external_update(
 
 -- BEGIN SNIPPETS
 
-ls.add_snippets("markdown", {
-	s({ trig = "katex", name = "Katex shortcode" }, {
-		t("{{< katex "),
-		i(1, "inline"),
-		t(" >}} "),
-		i(2),
-		t(" {{< /katex }}"),
-		i(0),
-	}),
-	s({ trig = "hint", name = "Hint shortcode" }, {
-		t("{{< hint "),
-		i(1, "info"),
-		t({ " >}}", "", "" }),
-		i(2),
-		t({ "", "", "{{< /hint >}}", "" }),
-		i(0),
-	})
-})
-
 ls.add_snippets("tex", {
 	s({
 		trig = "mat",

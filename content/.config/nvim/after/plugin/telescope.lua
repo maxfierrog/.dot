@@ -3,11 +3,10 @@ local tsc = require('telescope')
 
 vim.keymap.set('n', '<leader>ff', tsc_builtin.find_files, {})
 vim.keymap.set('n', '<leader>fg', tsc_builtin.live_grep, {})
-vim.keymap.set('n', '<leader>fi', tsc_builtin.git_files, {})
 vim.keymap.set('n', '<leader>fd', tsc_builtin.lsp_workspace_symbols, {})
 vim.keymap.set('n', '<leader>fb', tsc_builtin.git_branches, {})
-vim.keymap.set('n', '<leader>fj', tsc_builtin.command_history, {})
-vim.keymap.set('n', '<leader>fk', tsc_builtin.git_commits, {})
+vim.keymap.set('n', '<leader>fc', tsc_builtin.command_history, {})
+vim.keymap.set('n', '<leader>fv', tsc_builtin.git_commits, {})
 
 tsc.setup({
 	pickers = {

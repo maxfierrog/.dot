@@ -1,39 +1,84 @@
 [
+  // Only normal vim mode.
   {
     "context": "Editor && vim_mode == normal && !menu",
     "bindings": {
+      "-": "editor::ToggleFold",
+      "(": "pane::GoBack",
+      ")": "pane::GoForward",
+      "u": "vim::Undo",
+      "r": "vim::Redo",
+      "M": "editor::Hover",
+      "m": "editor::ToggleCodeActions",
+      "space d": "editor::GoToDefinition",
+      "space D": "editor::GoToDefinitionSplit",
       "space s": "workspace::Save",
-      "space f g": "workspace::NewSearch",
+      "space p": "workspace::NewSearch",
+      "space r": "editor::Rename",
+      "space a": "editor::SelectAllMatches",
       "space q": "pane::CloseActiveItem",
-      "space v": "pane::SplitRight",
-      "space d": "diagnostics::Deploy",
-      "space p": "file_finder::Toggle",
-      "shift-tab": "pane::ActivatePrevItem",
-      "tab": "pane::ActivateNextItem",
-      "H": ["workspace::ActivatePaneInDirection", "Left"],
+      "space f": "file_finder::Toggle",
+      "space g": "project_symbols::Toggle",
+      "space v": "pane::JoinIntoNext",
+      "space L": ["workspace::SwapPaneInDirection", "Right"],
+      "space H": ["workspace::SwapPaneInDirection", "Left"],
+      "space K": ["workspace::SwapPaneInDirection", "Up"],
+      "space J": ["workspace::SwapPaneInDirection", "Down"],
+      "space l": "pane::SplitRight",
+      "space h": "pane::SplitLeft",
+      "space k": "pane::SplitUp",
+      "space j": "pane::SplitDown",
       "L": ["workspace::ActivatePaneInDirection", "Right"],
+      "H": ["workspace::ActivatePaneInDirection", "Left"],
       "K": ["workspace::ActivatePaneInDirection", "Up"],
       "J": ["workspace::ActivatePaneInDirection", "Down"],
-      "M": "editor::Hover"
+      "<": "pane::ActivatePrevItem",
+      ">": "pane::ActivateNextItem"
     }
   },
+
+  // Visual or normal vim mode.
   {
-    "context": "VimControl && vim_mode != operator && !menu",
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !menu",
     "bindings": {
-      "shift-w": "vim::NextSubwordStart",
-      "shift-b": "vim::PreviousSubwordStart",
-      "shift-e": "vim::NextSubwordEnd"
+      "\\": "vim::RestoreVisualSelection",
+      ";": "vim::EndOfLine",
+      "'": "editor::SelectEnclosingSymbol",
+      "?": ["workspace::SendKeystrokes", "y / cmd-v alt-cmd-x"],
+      "=": "editor::FormatSelections",
+      "+": "editor::SelectLargerSyntaxNode",
+      "_": "editor::SelectSmallerSyntaxNode",
+      "]": ["workspace::SendKeystrokes", "}"],
+      "[": ["workspace::SendKeystrokes", "{"],
+      "K": ["workspace::SendKeystrokes", "5 k"],
+      "J": ["workspace::SendKeystrokes", "5 j"],
+      "W": "vim::NextSubwordStart",
+      "B": "vim::PreviousSubwordStart",
+      "E": "vim::NextSubwordEnd"
     }
   },
+
+  // REPL bindings for Python.
   {
-    "context": "Editor && jupyter && vim_mode == normal && !ContextEditor",
+    "context": "Editor && !menu && extension==py && (vim_mode == normal || vim_mode == visual) && !ContextEditor",
     "bindings": {
       "enter": "repl::RunInPlace",
       "shift-enter": "repl::Run",
       "backspace": "repl::ClearOutputs",
       "shift-backspace": "repl::Restart",
-      "]": ["workspace::SendKeystrokes", "/ # space % % enter escape"],
-      "[": ["workspace::SendKeystrokes", "k / # space % % enter shift-n escape"]
+      "space ]": ["workspace::SendKeystrokes", "/ # space % % enter escape"],
+      "space [": [
+        "workspace::SendKeystrokes",
+        "k / # space % % enter shift-n escape"
+      ]
+    }
+  },
+
+  // TeX bindings.
+  {
+    "context": "Editor && extension==tex",
+    "bindings": {
+      "enter": ["task::Spawn", { "task_name": "Forward Search" }]
     }
   }
 ]
