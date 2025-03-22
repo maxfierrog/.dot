@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["alpha-nvim"] = {
+    loaded = true,
+    path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/alpha-nvim",
+    url = "https://github.com/goolord/alpha-nvim"
+  },
   ["cmp-buffer"] = {
     loaded = true,
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/cmp-buffer",
@@ -149,6 +154,11 @@ _G.packer_plugins = {
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/mason.nvim",
     url = "https://github.com/williamboman/mason.nvim"
   },
+  ["mini.icons"] = {
+    loaded = true,
+    path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/mini.icons",
+    url = "https://github.com/echasnovski/mini.icons"
+  },
   ["numbers.vim"] = {
     loaded = true,
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/numbers.vim",
@@ -198,6 +208,11 @@ _G.packer_plugins = {
     loaded = true,
     path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/plenary.nvim",
     url = "https://github.com/nvim-lua/plenary.nvim"
+  },
+  ["possession.nvim"] = {
+    loaded = true,
+    path = "/Users/maxfierro/.local/share/nvim/site/pack/packer/start/possession.nvim",
+    url = "https://github.com/jedrzejboczar/possession.nvim"
   },
   rustaceanvim = {
     loaded = true,

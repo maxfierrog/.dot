@@ -22,7 +22,7 @@ vim.keymap.set("n", "K", '5k', { silent = true, noremap = true })
 vim.keymap.set("n", "J", '5j', { silent = true, noremap = true })
 
 -- Go to end of line
-vim.keymap.set("n", ";", '$', { silent = true, noremap = true })
+vim.keymap.set({ "x", "n" }, ";", '$', { silent = true, noremap = true })
 
 -- Restore visual selection
 vim.keymap.set("n", "\\", 'gv', { silent = true, noremap = true })
@@ -45,10 +45,18 @@ vim.keymap.set('n', '<leader>a', function()
 end, { noremap = true, silent = true })
 
 -- Toggle search highlighting
-vim.keymap.set('n', '<leader>H', function()
+vim.keymap.set('n', 'H', function()
 	if vim.o.hlsearch then
 		vim.o.hlsearch = false
 	else
 		vim.o.hlsearch = true
 	end
 end, { noremap = true, silent = true })
+
+-- Save current session, map it to CWD
+vim.keymap.set(
+	"n",
+	"<leader>S",
+	":PossessionSaveCwd!<CR>",
+	{ noremap = true, silent = true }
+)

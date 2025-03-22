@@ -41,6 +41,14 @@ return require('packer').startup(function(use)
 	}
 	use {
 		'nvim-telescope/telescope.nvim', tag = '0.1.6',
-		requires = { { 'nvim-lua/plenary.nvim' } }
+		requires = { 'nvim-lua/plenary.nvim' }
+	}
+	use {
+		'goolord/alpha-nvim',
+		requires = { 'echasnovski/mini.icons' }
+	}
+	use {
+		'jedrzejboczar/possession.nvim',
+		requires = { 'nvim-lua/plenary.nvim' },
 	}
 end)

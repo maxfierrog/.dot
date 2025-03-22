@@ -4,6 +4,7 @@ vim.cmd('set tabstop=4')
 vim.cmd('set softtabstop=0')
 vim.cmd('set shiftwidth=0')
 
+vim.o.scrolloff = 10
 vim.diagnostic.config({
 	virtual_text = false,
 	signs = true,

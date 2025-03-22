@@ -7,6 +7,7 @@ vim.keymap.set('n', '<leader>fd', tsc_builtin.lsp_workspace_symbols, {})
 vim.keymap.set('n', '<leader>fb', tsc_builtin.git_branches, {})
 vim.keymap.set('n', '<leader>fc', tsc_builtin.command_history, {})
 vim.keymap.set('n', '<leader>fv', tsc_builtin.git_commits, {})
+vim.keymap.set('n', '<leader>fr', tsc_builtin.oldfiles, {})
 
 tsc.setup({
 	pickers = {
@@ -19,8 +20,10 @@ tsc.setup({
 		find_files = {
 			file_ignore_patterns = { 'node_modules', '.git', '.venv' },
 			hidden = true
+		},
+		oldfiles = {
+			cwd_only = true,
 		}
-
 	},
 	extensions = {
 		"fzf"
