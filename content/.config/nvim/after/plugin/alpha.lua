@@ -31,25 +31,15 @@ local function split(source, sep)
 	return result
 end
 
-dashboard.section.header.val = [[
-                                         ▄▄
-                                         ██
-
-▀████████▄   ▄▄█▀██  ▄██▀██▄▀██▀   ▀██▀▀███ ▀████████▄█████▄
-  ██    ██  ▄█▀   ████▀   ▀██ ██   ▄█    ██   ██    ██    ██
-  ██    ██  ██▀▀▀▀▀▀██     ██  ██ ▄█     ██   ██    ██    ██
-  ██    ██  ██▄    ▄██▄   ▄██   ███      ██   ██    ██    ██
-▄████  ████▄ ▀█████▀ ▀█████▀     █     ▄████▄████  ████  ████▄
-]]
-
 dashboard.section.footer.val = "Total plugins: " .. vim.tbl_count(packer_plugins)
 dashboard.section.header.opts.hl = "Question"
 dashboard.section.buttons.val = {
-	dashboard.button("s", "-> last session", ":PossessionLoadCwd<CR>"),
-	dashboard.button("r", "-> recent files", ":Telescope oldfiles<CR>"),
-	dashboard.button("f", "-> search files", ":Telescope find_files<CR>"),
-	dashboard.button("w", "-> write file", ":enew<CR>"),
-	dashboard.button("c", "-> nvim config", ":cd ~/.dot/content/.config/nvim<CR>"),
+	dashboard.button("l", "-> open directory session", ":PossessionLoadCwd<CR>"),
+	dashboard.button("s", "-> see recent sessions", ":Telescope possession<CR>"),
+	dashboard.button("r", "-> search recent files", ":Telescope oldfiles<CR>"),
+	dashboard.button("f", "-> search all files", ":Telescope find_files<CR>"),
+	dashboard.button("w", "-> write new file", ":enew<CR>"),
+	dashboard.button("c", "-> neovim config", ":cd ~/.dot/content/.config/nvim<CR>"),
 	dashboard.button("q", "-> quit", ":qa<CR>"),
 }
 alpha.setup(dashboard.config)
@@ -59,15 +49,30 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	group = "vimrc_alpha",
 	pattern = "AlphaReady",
 	callback = function()
-		if vim.fn.executable("onefetch") == 1 then
-			local header = split(
+		local header = nil
+		if vim.fn.executable("onefetch") == 1 and vim.fn.system("git rev-parse --is-inside-work-tree") == "true\n" then
+			header = split(
 				capture([[onefetch 2>/dev/null | sed -E 's/\x1B\[[0-9;]*[mK]//g']]),
 				"\n"
 			)
-			if next(header) ~= nil then
-				require("alpha.themes.dashboard").section.header.val = header
-				require("alpha").redraw()
-			end
+		else
+			header = split(
+				[[
+                                         ▄▄
+                                         ██
+Writing with
+▀████████▄   ▄▄█▀██  ▄██▀██▄▀██▀   ▀██▀▀███ ▀████████▄█████▄
+  ██    ██  ▄█▀   ████▀   ▀██ ██   ▄█    ██   ██    ██    ██
+  ██    ██  ██▀▀▀▀▀▀██     ██  ██ ▄█     ██   ██    ██    ██
+  ██    ██  ██▄    ▄██▄   ▄██   ███      ██   ██    ██    ██
+▄████  ████▄ ▀█████▀ ▀█████▀     █     ▄████▄████  ████  ████▄
+				]],
+				"\n"
+			)
+		end
+		if next(header) ~= nil then
+			require("alpha.themes.dashboard").section.header.val = header
+			require("alpha").redraw()
 		end
 	end,
 	once = true,
