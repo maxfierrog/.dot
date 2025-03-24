@@ -54,3 +54,9 @@ vim.keymap.set(
 	":PossessionSaveCwd!<CR>",
 	{ noremap = true, silent = true }
 )
+
+-- Toggle file tree
+vim.keymap.set("n", "<leader>p", ":NvimTreeToggle<CR>")
+
+-- Toggle undo tree
+vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)

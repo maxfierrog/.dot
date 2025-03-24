@@ -1,13 +1,14 @@
+local node_util = require("luasnip.nodes.util")
+local util = require("luasnip.util.util")
 local ls = require("luasnip")
-local s = ls.snippet
+
 local sn = ls.snippet_node
-local t = ls.text_node
-local i = ls.insert_node
 local f = ls.function_node
 local d = ls.dynamic_node
 local r = ls.restore_node
-local util = require("luasnip.util.util")
-local node_util = require("luasnip.nodes.util")
+local i = ls.insert_node
+local t = ls.text_node
+local s = ls.snippet
 
 -- INTERACTIVE SNIPPET UTILITIES
 
@@ -565,11 +566,4 @@ ls.add_snippets("tex", {
 	}, {
 		t("\\implies"), i(0)
 	})
-})
-
-ls.setup({
-	link_children = true,
-	keep_roots = true,
-	exit_roots = true,
-	link_roots = false,
 })
