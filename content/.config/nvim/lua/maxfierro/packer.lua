@@ -1,6 +1,13 @@
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
+local packer = require('packer')
+packer.init({
+	profile = {
+		enable = true,
+	}
+})
+
+return packer.startup(function(use)
 	use 'wbthomason/packer.nvim'
 	use 'nvim-treesitter/playground'
 	use 'kyazdani42/nvim-tree.lua'
@@ -18,6 +25,8 @@ return require('packer').startup(function(use)
 	use 'myusuf3/numbers.vim'
 	use 'nvim-lualine/lualine.nvim'
 	use 'lewis6991/gitsigns.nvim'
+	use 'stevearc/oil.nvim'
+	use 'dstein64/vim-startuptime'
 	use {
 		'VonHeikemen/lsp-zero.nvim',
 		branch = 'v3.x',

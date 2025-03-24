@@ -34,12 +34,14 @@ end
 dashboard.section.footer.val = "Total plugins: " .. vim.tbl_count(packer_plugins)
 dashboard.section.header.opts.hl = "Question"
 dashboard.section.buttons.val = {
-	dashboard.button("l", "-> open directory session", ":PossessionLoadCwd<CR>"),
-	dashboard.button("s", "-> see recent sessions", ":Telescope possession<CR>"),
+	dashboard.button("d", "-> open directory session", ":PossessionLoadCwd<CR>"),
+	dashboard.button("l", "-> see latest sessions", ":Telescope possession<CR>"),
 	dashboard.button("r", "-> search recent files", ":Telescope oldfiles<CR>"),
-	dashboard.button("f", "-> search all files", ":Telescope find_files<CR>"),
-	dashboard.button("w", "-> write new file", ":enew<CR>"),
+	dashboard.button("a", "-> search all files", ":Telescope find_files<CR>"),
+	dashboard.button("f", "-> edit file tree", ":lua require('oil').toggle_float()<CR>"),
+	dashboard.button("n", "-> write new file", ":enew<CR>"),
 	dashboard.button("c", "-> neovim config", ":cd ~/.dot/content/.config/nvim<CR>"),
+	dashboard.button("p", "-> run profiler", ":StartupTime<CR>"),
 	dashboard.button("q", "-> quit", ":qa<CR>"),
 }
 alpha.setup(dashboard.config)
@@ -50,7 +52,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
 	pattern = "AlphaReady",
 	callback = function()
 		local header = nil
-		if vim.fn.executable("onefetch") == 1 and vim.fn.system("git rev-parse --is-inside-work-tree") == "true\n" then
+		if vim.fn.executable("onefetch") == 1 and vim.fn.system("git rev-parse --verify HEAD 2>/dev/null") ~= "" then
 			header = split(
 				capture([[onefetch 2>/dev/null | sed -E 's/\x1B\[[0-9;]*[mK]//g']]),
 				"\n"
@@ -60,7 +62,7 @@ vim.api.nvim_create_autocmd({ "User" }, {
 				[[
                                          ▄▄
                                          ██
-Writing with
+Waste time with
 ▀████████▄   ▄▄█▀██  ▄██▀██▄▀██▀   ▀██▀▀███ ▀████████▄█████▄
   ██    ██  ▄█▀   ████▀   ▀██ ██   ▄█    ██   ██    ██    ██
   ██    ██  ██▀▀▀▀▀▀██     ██  ██ ▄█     ██   ██    ██    ██

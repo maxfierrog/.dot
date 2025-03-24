@@ -45,18 +45,12 @@ vim.keymap.set('n', '<leader>a', function()
 end, { noremap = true, silent = true })
 
 -- Toggle search highlighting
-vim.keymap.set('n', 'H', function()
-	if vim.o.hlsearch then
-		vim.o.hlsearch = false
-	else
-		vim.o.hlsearch = true
-	end
-end, { noremap = true, silent = true })
+vim.keymap.set('n', '?', ':noh<CR>', { noremap = true, silent = true })
 
 -- Save current session, map it to CWD
 vim.keymap.set(
 	"n",
-	"<leader>S",
+	"<Tab>",
 	":PossessionSaveCwd!<CR>",
 	{ noremap = true, silent = true }
 )
