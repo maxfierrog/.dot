@@ -1,6 +1,5 @@
 return {
 	{ 'nvim-tree/nvim-web-devicons' },
-	{ 'dstein64/vim-startuptime' },
 	{
 		'jedrzejboczar/possession.nvim',
 
@@ -9,11 +8,21 @@ return {
 	{
 		'kyazdani42/nvim-tree.lua',
 
+		lazy = false,
+
 		init = function(plugin)
 			vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
 			vim.api.nvim_set_option('updatetime', 300)
 		end,
+
+		cmd = {
+			"NvimTreeOpen",
+			"NvimTreeToggle",
+			"NvimTreeFocus",
+			"NvimTreeFindFile",
+			"NvimTreeFindFileToggle",
+		},
 
 		opts = {
 			sort = {
@@ -42,6 +51,8 @@ return {
 	},
 	{
 		'stevearc/oil.nvim',
+
+		lazy = false,
 
 		opts = {
 			watch_for_changes = true,
@@ -92,8 +103,9 @@ return {
 			},
 		},
 
-		config = function(plugin, _)
-			vim.keymap.set('n', '<leader>o', function() plugin.toggle_float() end)
+		config = function()
+			local oil = require('oil')
+			vim.keymap.set('n', '<leader>o', function() oil.toggle_float() end)
 		end
 
 	}
