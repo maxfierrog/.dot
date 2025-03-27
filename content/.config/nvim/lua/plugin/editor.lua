@@ -27,7 +27,7 @@ return {
 				notification = "%T",
 				notification_history = "%FT%T"
 			},
-			timeout = 4500,
+			timeout = 7500,
 			top_down = true
 		},
 

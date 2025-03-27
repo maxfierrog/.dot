@@ -30,7 +30,11 @@ return {
 			lsp.on_attach(function(client, bufnr)
 				local opts = { buffer = bufnr, remap = false }
 				lsp.default_keymaps({ buffer = bufnr })
-				lsp.buffer_autoformat()
+
+				if client.name == 'marksman' then
+					client.server_capabilities.documentFormattingProvider = false
+				end
+
 				vim.keymap.set("n", "M", function() vim.lsp.buf.hover() end, opts)
 				vim.keymap.set("n", "m", function() vim.lsp.buf.code_action() end, opts)
 				vim.keymap.set("n", "<leader>d", function() vim.lsp.buf.definition() end, opts)
