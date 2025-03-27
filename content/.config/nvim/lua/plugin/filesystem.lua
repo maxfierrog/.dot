@@ -3,7 +3,13 @@ return {
 	{
 		'jedrzejboczar/possession.nvim',
 
+		lazy = false,
+
 		dependencies = { 'nvim-lua/plenary.nvim' },
+
+		config = function(plugin, opts)
+			require('possession').setup(opts)
+		end
 	},
 	{
 		'kyazdani42/nvim-tree.lua',
@@ -15,14 +21,6 @@ return {
 			vim.g.loaded_netrwPlugin = 1
 			vim.api.nvim_set_option('updatetime', 300)
 		end,
-
-		cmd = {
-			"NvimTreeOpen",
-			"NvimTreeToggle",
-			"NvimTreeFocus",
-			"NvimTreeFindFile",
-			"NvimTreeFindFileToggle",
-		},
 
 		opts = {
 			sort = {
@@ -42,11 +40,23 @@ return {
 
 		config = function(plugin, opts)
 			opts.on_attach = function(bufnr)
-				plugin.config.mappings.default_on_attach(bufnr)
+				local api = require('nvim-tree.api')
+				local function opts(desc)
+					return {
+						desc = "nvim-tree: " .. desc,
+						buffer = bufnr,
+						noremap = true,
+						silent = true,
+						nowait = true
+					}
+				end
+
+				api.config.mappings.default_on_attach(bufnr)
 				vim.keymap.del('n', 'H', { buffer = bufnr })
 				vim.keymap.del('n', 'L', { buffer = bufnr })
 				vim.keymap.del('n', '<bs>', { buffer = bufnr })
 			end
+			require('nvim-tree').setup(opts)
 		end
 	},
 	{
@@ -103,8 +113,9 @@ return {
 			},
 		},
 
-		config = function()
+		config = function(plugin, opts)
 			local oil = require('oil')
+			oil.setup(opts)
 			vim.keymap.set('n', '<leader>o', function() oil.toggle_float() end)
 		end
 
