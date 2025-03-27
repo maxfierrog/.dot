@@ -170,7 +170,6 @@ return {
 					vim.keymap.set(mode, l, r, opts)
 				end
 
-				-- Navigation
 				map('n', ']h', function()
 					if vim.wo.diff then
 						vim.cmd.normal({ ']h', bang = true })
