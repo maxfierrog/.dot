@@ -146,6 +146,13 @@ return {
 				},
 			})
 
+			lsp.set_sign_icons({
+				error = 'ε',
+				warn = 'υ',
+				hint = 'η',
+				info = 'ι'
+			})
+
 			hl(0, "DiagnosticError", { fg = "#CC0303", bg = NONE })
 			hl(0, "DiagnosticSignError", { fg = "#FF0303", bg = NONE })
 			hl(0, "DiagnosticSignHint", { fg = "#03BB09", bg = NONE })
@@ -171,13 +178,6 @@ return {
 					'yamlls',
 					'taplo',
 				},
-			})
-
-			lsp.set_sign_icons({
-				error = 'ε',
-				warn = 'υ',
-				hint = 'η',
-				info = 'ι'
 			})
 
 			lsp.setup()

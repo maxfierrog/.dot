@@ -11,9 +11,9 @@ vim.cmd('hi SignColumn guibg=NONE')
 vim.o.scrolloff = 10
 vim.diagnostic.config({
 	virtual_text = false,
-	signs = true,
+	signs = false,
 	update_in_insert = true,
-	underline = false,
+	underline = true,
 	severity_sort = true,
 	float = {
 		border = 'rounded',
@@ -26,4 +26,5 @@ vim.diagnostic.config({
 vim.o.sessionoptions = "blank,buffers,curdir,folds,help,tabpages,winsize,winpos,terminal,localoptions"
 vim.opt.completeopt = { 'menuone', 'noselect', 'noinsert' }
 vim.opt.shortmess = vim.opt.shortmess + { c = true }
+vim.opt.signcolumn = "yes"
 vim.opt.termguicolors = true;

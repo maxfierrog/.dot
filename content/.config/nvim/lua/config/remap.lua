@@ -16,10 +16,10 @@ vim.keymap.set("n", "<leader>s", ":w<CR>", { silent = true, noremap = true })
 vim.keymap.set("n", "<leader>q", ":q<CR>", { silent = true, noremap = true })
 
 -- Traverse 5 lines up
-vim.keymap.set("n", "K", '5k', { silent = true, noremap = true })
+vim.keymap.set({ "x", "n" }, "K", '6k', { silent = true, noremap = true })
 
 -- Traverse 5 lines down
-vim.keymap.set("n", "J", '5j', { silent = true, noremap = true })
+vim.keymap.set({ "x", "n" }, "J", '6j', { silent = true, noremap = true })
 
 -- Go to end of line
 vim.keymap.set({ "x", "n" }, ";", '$', { silent = true, noremap = true })
