@@ -5,6 +5,39 @@ return {
 	{ 'numToStr/Comment.nvim' },
 	{ 'KeitaNakamura/tex-conceal.vim' },
 	{
+		'rcarriga/nvim-notify',
+
+		lazy = false,
+
+		opts = {
+			background_colour = "NotifyBackground",
+			fps = 1,
+			icons = {
+				DEBUG = "[d]",
+				ERROR = "[e]",
+				INFO = "[i]",
+				TRACE = "[t]",
+				WARN = "[w]"
+			},
+			level = 2,
+			minimum_width = 50,
+			render = "default",
+			stages = "static",
+			time_formats = {
+				notification = "%T",
+				notification_history = "%FT%T"
+			},
+			timeout = 4500,
+			top_down = true
+		},
+
+		config = function(plugin, opts)
+			local notify = require('notify')
+			vim.notify = notify
+			notify.setup(opts)
+		end
+	},
+	{
 		'rebelot/kanagawa.nvim',
 
 		lazy = false,
@@ -114,7 +147,7 @@ return {
 		opts = {
 			options = {
 				icons_enabled = false,
-				theme = 'gruvbox-material',
+				theme = 'auto',
 				component_separators = { left = '', right = '' },
 				section_separators = { left = '', right = '' },
 				disabled_filetypes = {
@@ -125,9 +158,9 @@ return {
 				always_divide_middle = true,
 				globalstatus = false,
 				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
+					statusline = 100,
+					tabline = 100,
+					winbar = 100,
 				}
 			},
 			sections = {
