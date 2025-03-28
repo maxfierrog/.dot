@@ -1,3 +1,31 @@
+
+-- DEFINITIONS
+
+-- Local table to track tex bindings per filetype
+local tex_in_filetypes = {}
+
+-- Function to toggle tex bindings for current filetype 
+function toggle_tex_bindings()
+  local filetype = vim.bo.filetype
+
+  if tex_in_filetypes[filetype] == nil then
+    tex_in_filetypes[filetype] = false
+  end
+
+  if tex_in_filetypes[filetype] then
+    tex_in_filetypes[filetype] = false
+    require("luasnip").filetype_set(filetype, { filetype })
+    vim.notify("Tex bindings removed from " .. filetype, vim.log.levels.INFO)
+  else
+    tex_in_filetypes[filetype] = true
+    require("luasnip").filetype_set(filetype, { filetype, "tex" })
+    vim.notify("Tex bindings added to " .. filetype, vim.log.levels.INFO)
+  end
+end
+
+
+-- LEADER
+
 vim.g.mapleader = " "
 
 
@@ -7,10 +35,10 @@ vim.g.mapleader = " "
 vim.keymap.set("n", "<bs>", '<c-^>zz', { silent = true, noremap = true })
 
 -- Go 6 lines up 
-vim.keymap.set("n", "K", "6k", { silent = true, noremap = true })
+vim.keymap.set({"x", "n"}, "K", "6k", { silent = true, noremap = true })
 
 -- Go 6 lines down 
-vim.keymap.set("n", "J", "6j", { silent = true, noremap = true })
+vim.keymap.set({"x", "n"}, "J", "6j", { silent = true, noremap = true })
 
 -- Open a split right
 vim.keymap.set("n", ">", ":vs<CR>", { silent = true, noremap = true })
@@ -75,6 +103,13 @@ vim.keymap.set("n", "<leader>p", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 
+
+-- SPECIAL
+
+-- Toggle tex bindings for current filetype
+vim.keymap.set("n", "<leader>T", [[:lua toggle_tex_bindings()<CR>]], { noremap = true, silent = true })
+
+
 -- AUTOCOMMANDS
 
 -- Save session before closing
@@ -83,3 +118,4 @@ vim.api.nvim_create_autocmd("VimLeavePre", {
         vim.cmd("PossessionSaveCwd!")
     end,
 })
+

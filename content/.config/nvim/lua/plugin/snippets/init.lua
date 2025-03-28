@@ -23,7 +23,6 @@ return {
 				vim.notify("Failed to load snippets for " .. lang, vim.log.levels.WARN)
 			end
 		end
-		ls.filetype_extend("markdown", { "tex" })
 		ls.setup(opts)
 	end,
 }
