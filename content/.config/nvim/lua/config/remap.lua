@@ -1,13 +1,37 @@
 vim.g.mapleader = " "
 
+
+-- NAVIGATION
+
 -- Switch to previous buffer
 vim.keymap.set("n", "<bs>", '<c-^>zz', { silent = true, noremap = true })
 
--- Move to next tab
+-- Go 6 lines up 
+vim.keymap.set("n", "K", "6k", { silent = true, noremap = true })
+
+-- Go 6 lines down 
+vim.keymap.set("n", "J", "6j", { silent = true, noremap = true })
+
+-- Open a split right
+vim.keymap.set("n", ">", ":vs<CR>", { silent = true, noremap = true })
+
+-- Open a split left
+vim.keymap.set("n", "<", ":leftabove vs<CR>", { silent = true, noremap = true })
+
+-- Move to next split 
 vim.keymap.set("n", "L", "<C-w>w", { silent = true, noremap = true })
 
--- Move to previous tab
-vim.keymap.set("n", "H", "<C-w>h", { silent = true, noremap = true })
+-- Move to previous split
+vim.keymap.set("n", "H", "<C-w>W", { silent = true, noremap = true })
+
+-- Switch with right split
+vim.keymap.set("n", "<leader>L", "<C-w>L", { silent = true, noremap = true })
+
+-- Switch with left split
+vim.keymap.set("n", "<leader>H", "<C-w>H", { silent = true, noremap = true })
+
+
+-- MANIPULATION
 
 -- Save buffer
 vim.keymap.set("n", "<leader>s", ":w<CR>", { silent = true, noremap = true })
@@ -15,11 +39,8 @@ vim.keymap.set("n", "<leader>s", ":w<CR>", { silent = true, noremap = true })
 -- Quit current buffer
 vim.keymap.set("n", "<leader>q", ":q<CR>", { silent = true, noremap = true })
 
--- Traverse 5 lines up
-vim.keymap.set({ "x", "n" }, "K", '6k', { silent = true, noremap = true })
-
--- Traverse 5 lines down
-vim.keymap.set({ "x", "n" }, "J", '6j', { silent = true, noremap = true })
+-- Quit all buffers 
+vim.keymap.set("n", "<leader>Q", ":qa<CR>", { silent = true, noremap = true })
 
 -- Go to end of line
 vim.keymap.set({ "x", "n" }, ";", '$', { silent = true, noremap = true })
@@ -47,16 +68,18 @@ end, { noremap = true, silent = true })
 -- Toggle search highlighting
 vim.keymap.set('n', '?', ':noh<CR>', { noremap = true, silent = true })
 
--- Save current session, map it to CWD
-vim.keymap.set(
-	"n",
-	"<Tab>",
-	":PossessionSaveCwd!<CR>",
-	{ noremap = true, silent = true }
-)
-
 -- Toggle file tree
 vim.keymap.set("n", "<leader>p", ":NvimTreeToggle<CR>")
 
 -- Toggle undo tree
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+
+
+-- AUTOCOMMANDS
+
+-- Save session before closing
+vim.api.nvim_create_autocmd("VimLeavePre", {
+    callback = function()
+        vim.cmd("PossessionSaveCwd!")
+    end,
+})
