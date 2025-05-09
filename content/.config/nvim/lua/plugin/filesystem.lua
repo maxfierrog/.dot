@@ -1,13 +1,20 @@
 return {
 	{ 'nvim-tree/nvim-web-devicons' },
-	{ 'dstein64/vim-startuptime' },
 	{
 		'jedrzejboczar/possession.nvim',
 
+		lazy = false,
+
 		dependencies = { 'nvim-lua/plenary.nvim' },
+
+		config = function(plugin, opts)
+			require('possession').setup(opts)
+		end
 	},
 	{
 		'kyazdani42/nvim-tree.lua',
+
+		lazy = false,
 
 		init = function(plugin)
 			vim.g.loaded_netrw = 1
@@ -33,15 +40,29 @@ return {
 
 		config = function(plugin, opts)
 			opts.on_attach = function(bufnr)
-				plugin.config.mappings.default_on_attach(bufnr)
+				local api = require('nvim-tree.api')
+				local function opts(desc)
+					return {
+						desc = "nvim-tree: " .. desc,
+						buffer = bufnr,
+						noremap = true,
+						silent = true,
+						nowait = true
+					}
+				end
+
+				api.config.mappings.default_on_attach(bufnr)
 				vim.keymap.del('n', 'H', { buffer = bufnr })
 				vim.keymap.del('n', 'L', { buffer = bufnr })
 				vim.keymap.del('n', '<bs>', { buffer = bufnr })
 			end
+			require('nvim-tree').setup(opts)
 		end
 	},
 	{
 		'stevearc/oil.nvim',
+
+		lazy = false,
 
 		opts = {
 			watch_for_changes = true,
@@ -92,8 +113,10 @@ return {
 			},
 		},
 
-		config = function(plugin, _)
-			vim.keymap.set('n', '<leader>o', function() plugin.toggle_float() end)
+		config = function(plugin, opts)
+			local oil = require('oil')
+			oil.setup(opts)
+			vim.keymap.set('n', '<leader>o', function() oil.toggle_float() end)
 		end
 
 	}

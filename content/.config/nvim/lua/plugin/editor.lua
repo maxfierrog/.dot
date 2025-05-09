@@ -5,23 +5,42 @@ return {
 	{ 'numToStr/Comment.nvim' },
 	{ 'KeitaNakamura/tex-conceal.vim' },
 	{
-		"L3MON4D3/LuaSnip",
+		'rcarriga/nvim-notify',
 
-		build = "make install_jsregexp",
+		lazy = false,
 
-		config = function()
-			local ls = require("luasnip")
-			require("snippets")
-			ls.setup({
-				link_children = true,
-				keep_roots = true,
-				exit_roots = true,
-				link_roots = false,
-			})
-		end,
+		opts = {
+			background_colour = "NotifyBackground",
+			fps = 1,
+			icons = {
+				DEBUG = "[d]",
+				ERROR = "[e]",
+				INFO = "[i]",
+				TRACE = "[t]",
+				WARN = "[w]"
+			},
+			level = 2,
+			minimum_width = 50,
+			render = "default",
+			stages = "static",
+			time_formats = {
+				notification = "%T",
+				notification_history = "%FT%T"
+			},
+			timeout = 3500,
+			top_down = true
+		},
+
+		config = function(plugin, opts)
+			local notify = require('notify')
+			vim.notify = notify
+			notify.setup(opts)
+		end
 	},
 	{
 		'rebelot/kanagawa.nvim',
+
+		lazy = false,
 
 		opts = {
 			compile = false,
@@ -46,9 +65,10 @@ return {
 				dark = "dragon",
 				light = "lotus"
 			},
-		}
+		},
 
-		config = function()
+		config = function(plugin, opts)
+			require('kanagawa').setup(opts)
 			vim.cmd("colorscheme kanagawa")
 		end
 	},
@@ -94,6 +114,8 @@ return {
 	{
 		'myusuf3/numbers.vim',
 
+		lazy = false,
+
 		init = function()
 			vim.g.numbers_exclude = {
 				'unite',
@@ -120,23 +142,25 @@ return {
 	{
 		'nvim-lualine/lualine.nvim',
 
+		lazy = false,
+
 		opts = {
 			options = {
-				icons_enabled = true,
-				theme = 'gruvbox-material',
+				icons_enabled = false,
+				theme = 'auto',
 				component_separators = { left = '', right = '' },
 				section_separators = { left = '', right = '' },
 				disabled_filetypes = {
-					statusline = {},
-					winbar = {},
+					'NvimTree',
+					'alpha'
 				},
 				ignore_focus = {},
 				always_divide_middle = true,
 				globalstatus = false,
 				refresh = {
-					statusline = 1000,
-					tabline = 1000,
-					winbar = 1000,
+					statusline = 100,
+					tabline = 100,
+					winbar = 100,
 				}
 			},
 			sections = {
@@ -159,10 +183,75 @@ return {
 			winbar = {},
 			inactive_winbar = {},
 			extensions = {}
-		}
+		},
+
+		config = function(plugin, opts)
+			require('lualine').setup(opts)
+		end
 	},
 	{
 		'lewis6991/gitsigns.nvim',
+
+		lazy = false,
+
+		config = function(plugin, opts)
+			local gsn = require('gitsigns')
+			opts.on_attach = function(bufnr)
+				local function map(mode, l, r, opts)
+					opts = opts or {}
+					opts.buffer = bufnr
+					vim.keymap.set(mode, l, r, opts)
+				end
+
+				map('n', ']h', function()
+					if vim.wo.diff then
+						vim.cmd.normal({ ']h', bang = true })
+					else
+						gsn.nav_hunk('next')
+					end
+				end)
+
+				map('n', '[h', function()
+					if vim.wo.diff then
+						vim.cmd.normal({ '[h', bang = true })
+					else
+						gsn.nav_hunk('prev')
+					end
+				end)
+
+				-- Actions
+				map('n', '<leader>hs', gsn.stage_hunk)
+				map('n', '<leader>hr', gsn.reset_hunk)
+				map('v', '<leader>hs', function()
+					gsn.stage_hunk { vim.fn.line('.'), vim.fn.line('v') }
+				end)
+
+				map('v', '<leader>hr', function()
+					gsn.reset_hunk { vim.fn.line('.'), vim.fn.line('v') }
+				end)
+
+				map('n', '<leader>hS', gsn.stage_buffer)
+				map('n', '<leader>hu', gsn.undo_stage_hunk)
+				map('n', '<leader>hR', gsn.reset_buffer)
+				map('n', '<leader>hp', gsn.preview_hunk)
+				map('n', '<leader>hb', function() gsn.blame_line { full = true } end)
+				map('n', '<leader>tb', gsn.toggle_current_line_blame)
+				map('n', '<leader>hd', gsn.diffthis)
+				map('n', '<leader>hD', function() gsn.diffthis('~') end)
+				map('n', '<leader>td', gsn.toggle_deleted)
+
+				-- Text object
+				map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
+
+				vim.cmd('highlight GitSignsAdd guibg=NONE')
+				vim.cmd('highlight GitSignsChange guibg=NONE')
+				vim.cmd('highlight GitSignsDelete guibg=NONE')
+				vim.cmd('highlight GitSignsChangeDelete guibg=NONE')
+				vim.cmd('highlight GitSignsUntracked guibg=NONE')
+				vim.cmd('highlight GitSignsTopDelete guibg=NONE')
+			end
+			gsn.setup(opts)
+		end,
 
 		opts = {
 			signs                        = {
@@ -197,63 +286,12 @@ return {
 			status_formatter             = nil,
 			max_file_length              = 40000,
 			preview_config               = {
-				-- Options passed to nvim_open_win
 				border = 'single',
 				style = 'minimal',
 				relative = 'cursor',
 				row = 0,
 				col = 1
 			},
-			on_attach                    = function(bufnr)
-				local function map(mode, l, r, opts)
-					opts = opts or {}
-					opts.buffer = bufnr
-					vim.keymap.set(mode, l, r, opts)
-				end
-
-				-- Navigation
-				map('n', ']h', function()
-					if vim.wo.diff then
-						vim.cmd.normal({ ']h', bang = true })
-					else
-						gsn.nav_hunk('next')
-					end
-				end)
-
-				map('n', '[h', function()
-					if vim.wo.diff then
-						vim.cmd.normal({ '[h', bang = true })
-					else
-						gsn.nav_hunk('prev')
-					end
-				end)
-
-				-- Actions
-				map('n', '<leader>hs', gsn.stage_hunk)
-				map('n', '<leader>hr', gsn.reset_hunk)
-				map('v', '<leader>hs', function() gsn.stage_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-				map('v', '<leader>hr', function() gsn.reset_hunk { vim.fn.line('.'), vim.fn.line('v') } end)
-				map('n', '<leader>hS', gsn.stage_buffer)
-				map('n', '<leader>hu', gsn.undo_stage_hunk)
-				map('n', '<leader>hR', gsn.reset_buffer)
-				map('n', '<leader>hp', gsn.preview_hunk)
-				map('n', '<leader>hb', function() gsn.blame_line { full = true } end)
-				map('n', '<leader>tb', gsn.toggle_current_line_blame)
-				map('n', '<leader>hd', gsn.diffthis)
-				map('n', '<leader>hD', function() gsn.diffthis('~') end)
-				map('n', '<leader>td', gsn.toggle_deleted)
-
-				-- Text object
-				map({ 'o', 'x' }, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
-
-				vim.cmd('highlight GitSignsAdd guibg=NONE')
-				vim.cmd('highlight GitSignsChange guibg=NONE')
-				vim.cmd('highlight GitSignsDelete guibg=NONE')
-				vim.cmd('highlight GitSignsChangeDelete guibg=NONE')
-				vim.cmd('highlight GitSignsUntracked guibg=NONE')
-				vim.cmd('highlight GitSignsTopDelete guibg=NONE')
-			end
 		}
-
 	}
 }

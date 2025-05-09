@@ -2,6 +2,8 @@ return {
 	{
 		'VonHeikemen/lsp-zero.nvim',
 
+		lazy = false,
+
 		dependencies = {
 			{ 'williamboman/mason.nvim' },
 			{ 'williamboman/mason-lspconfig.nvim' },
@@ -14,7 +16,7 @@ return {
 			{ 'hrsh7th/cmp-path' },
 			{ 'hrsh7th/cmp-buffer' },
 			{ 'saadparwaiz1/cmp_luasnip' }
-		}
+		},
 
 		config = function()
 			local msn_lsp_cfg = require('mason-lspconfig')
@@ -28,7 +30,49 @@ return {
 			lsp.on_attach(function(client, bufnr)
 				local opts = { buffer = bufnr, remap = false }
 				lsp.default_keymaps({ buffer = bufnr })
-				lsp.buffer_autoformat()
+
+				if client.name == 'marksman' then
+					client.server_capabilities.documentFormattingProvider = false
+				end
+
+				if client.server_capabilities.documentFormattingProvider then
+					local augroup = vim.api.nvim_create_augroup(
+						'LspFormatOnSave',
+						{ clear = false }
+					)
+
+					vim.api.nvim_clear_autocmds(
+						{ group = augroup, buffer = bufnr }
+					)
+					vim.api.nvim_create_autocmd('BufWritePre', {
+						group = augroup,
+						buffer = bufnr,
+						callback = function()
+							if vim.bo[bufnr].filetype == "python" then
+								local file = vim.api.nvim_buf_get_name(bufnr)
+								vim.fn.jobstart(
+									{ "uvx", "black", file },
+									{
+										cwd = vim.fn.getcwd(),
+										on_exit = function(_, code)
+											if code == 0 then
+												vim.schedule(function() vim.cmd("edit!") end)
+											else
+												vim.schedule(function()
+													vim.notify("uvx black failed (exit " .. code .. ")",
+														vim.log.levels.ERROR)
+												end)
+											end
+										end,
+									}
+								)
+							else
+								vim.lsp.buf.format({ bufnr = bufnr })
+							end
+						end,
+					})
+				end
+
 				vim.keymap.set("n", "M", function() vim.lsp.buf.hover() end, opts)
 				vim.keymap.set("n", "m", function() vim.lsp.buf.code_action() end, opts)
 				vim.keymap.set("n", "<leader>d", function() vim.lsp.buf.definition() end, opts)

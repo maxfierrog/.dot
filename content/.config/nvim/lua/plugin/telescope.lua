@@ -2,6 +2,8 @@ return {
 	{
 		'nvim-telescope/telescope.nvim',
 
+		lazy = false,
+
 		dependencies = { 'nvim-lua/plenary.nvim' },
 
 		opts = {
@@ -39,7 +41,7 @@ return {
 			},
 		},
 
-		config = function()
+		config = function(plugin, opts)
 			local tscb = require('telescope.builtin')
 			vim.keymap.set('n', '<leader>fi', tscb.find_files, {})
 			vim.keymap.set('n', '<leader>fg', tscb.live_grep, {})
@@ -48,6 +50,8 @@ return {
 			vim.keymap.set('n', '<leader>fc', tscb.command_history, {})
 			vim.keymap.set('n', '<leader>fv', tscb.git_commits, {})
 			vim.keymap.set('n', '<leader>fr', tscb.oldfiles, {})
+			vim.keymap.set('n', '<leader>fn', ":Telescope notify<CR>", {})
+			require('telescope').setup(opts)
 		end
 	}
 }
