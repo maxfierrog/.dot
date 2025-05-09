@@ -2,26 +2,20 @@ return {
 	{
 		"nvim-treesitter/playground",
 
-		cmd = "TSPlaygroundToggle",
+		cmd          = "TSPlaygroundToggle",
 
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
 	},
 	{
 		"nvim-treesitter/nvim-treesitter",
 
-		build = ":TSUpdate",
+		lazy   = false,
 
-		event = { "BufReadPost", "BufNewFile" },
+		build  = ":TSUpdate",
 
-		opts = {
+		opts   = {
 			ensure_installed = {
-				"rust",
-				"c",
-				"lua",
-				"vim",
-				"vimdoc",
-				"query",
-				"markdown",
+				"rust", "c", "lua", "vim", "vimdoc", "query", "markdown",
 			},
 			sync_install = false,
 			auto_install = true,
@@ -29,13 +23,17 @@ return {
 				enable = true,
 				disable = { "latex" },
 			},
-			indent = false,
-			ident = { enable = true },
+			indent = { enable = true },
+			fold = { enable = false },
 			rainbow = {
-				enable = true,
-				extended_mode = true,
+				enable         = true,
+				extended_mode  = true,
 				max_file_lines = nil,
-			}
+			},
 		},
-	}
+
+		config = function(_, opts)
+			require("nvim-treesitter.configs").setup(opts)
+		end,
+	},
 }
