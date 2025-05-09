@@ -38,17 +38,20 @@ export EDITOR='nvim'
 # Set default git editor
 export GIT_EDITOR='nvim'
 
+# Specify tempfile directory
+export TMPDIR="$HOME/tmp"
+
 # Homebrew environment variables
 eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# Add julia-installed binaries to PATH 
+export PATH="$HOME/.juliaup/bin:$PATH"
 
 # Add cargo-installed binaries to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # Pull /usr/bin to front (brew fucks with this)
 export PATH="/usr/bin:$PATH"
-
-# Specify tempfile directory -- fixes OpenMPI shared memory initializaiton issues
-export TMPDIR=/tmp
 
 # Set SSH authentication socket to 1Password provision
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
@@ -61,20 +64,14 @@ eval "$(pyenv init -)"
 # Pyenv virtual environments plugin
 eval "$(pyenv virtualenv-init -)"
 
-# >>> juliaup initialize >>>
-
-# !! Contents within this block are managed by juliaup !!
-
-path=('/Users/maxfierro/.juliaup/bin' $path)
-export PATH
-
-# <<< juliaup initialize <<<
-#
 ############################################
 #
-#              Aliases
+#            	Shortcuts 
 #
 ############################################
+
+# Utility environment variables
+export TEMPLATES="$HOME/.templates"
 
 # Git aliases
 alias ginit="git init ."
@@ -100,3 +97,6 @@ alias ytop="ytop -as -c monokai -I 1/4"
 
 # If this fails, brew install zsh-syntax-highlighting
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+# uv uses a script in .local to add itself to PATH for whatever fucking reason
+. "$HOME/.local/bin/env"
