@@ -1,0 +1,25 @@
+[project]
+name = "new-project"
+description = "TODO"
+authors = [{ name = "Max Fierro", email = "maxfierro@berkeley.edu" }]
+version = "0.1.0"
+readme = "README.md"
+license = "MIT"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.scripts]
+main = "project.scripts:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/core"]
+
+[build-system]
+requires = ["hatchling>=1.13,<2"]
+build-backend = "hatchling.build"
+
+[tool.uv]
+package = true
+
+[tool.black]
+line-length = 80
