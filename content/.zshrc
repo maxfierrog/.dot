@@ -100,4 +100,3 @@ alias ytop="ytop -as -c monokai -I 1/4"
 
 # If this fails, brew install zsh-syntax-highlighting
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
