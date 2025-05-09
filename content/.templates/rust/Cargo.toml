@@ -1,0 +1,24 @@
+[package]
+name = "new-project"
+version = "0.1.0"
+authors = ["Max Fierro <maxfierro@berkeley.edu>"]
+license = "GPL-3.0"
+repository = "TODO"
+keywords = []
+edition = "2024"
+readme = "README.md"
+exclude = ["/.github", "/dev", "/doc"]
+description = "TODO"
+
+[[bin]]
+path = "src/main.rs"
+name = "TODO"
+
+[profile.release]
+codegen-units = 1
+debug = true
+lto = "fat"
+
+[dependencies]
+
+[dev-dependencies]

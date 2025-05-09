@@ -1,0 +1,14 @@
+# Package cache
+__pycache__/
+
+# Model checkpoints
+/models
+
+# Generated visuals
+/reports
+
+# MacOS directory metadata
+**/.DS_Store
+
+# VSCode artifacts
+/.vscode
