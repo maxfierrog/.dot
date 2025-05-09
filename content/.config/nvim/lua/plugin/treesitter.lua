@@ -1,7 +1,17 @@
 return {
-	{ 'nvim-treesitter/playground' },
 	{
-		'nvim-treesitter/nvim-treesitter',
+		"nvim-treesitter/playground",
+
+		cmd = "TSPlaygroundToggle",
+
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
+	{
+		"nvim-treesitter/nvim-treesitter",
+
+		build = ":TSUpdate",
+
+		event = { "BufReadPost", "BufNewFile" },
 
 		opts = {
 			ensure_installed = {
@@ -10,7 +20,8 @@ return {
 				"lua",
 				"vim",
 				"vimdoc",
-				"query"
+				"query",
+				"markdown",
 			},
 			sync_install = false,
 			auto_install = true,
