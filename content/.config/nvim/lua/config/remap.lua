@@ -104,7 +104,6 @@ vim.keymap.set("n", "<leader>p", ":NvimTreeToggle<CR>")
 vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 
 
-
 -- SPECIAL
 
 -- Toggle tex bindings for current filetype
