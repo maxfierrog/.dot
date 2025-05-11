@@ -1,10 +1,65 @@
+-- DEFINITIONS
+
+local image_name = function()
+	return string.format("%s", os.date "%Y%m%d%H%M%S")
+end
+
+local image_text = function(client, path)
+	path = client:vault_relative_path(path) or path
+	return string.format("![%s](images/%s)", path.name, path.name)
+end
+
+local note_id_function = function(title)
+	local suffix = ""
+	if title ~= nil then
+		suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+	end
+	return tostring(os.time()) .. "-" .. suffix
+end
+
+
+-- HELPERS
+
+local vaults = {
+	"creative",
+	"notes",
+	"todo",
+}
+
+local vaults_directory = vim.fn.expand "~" .. "/vaults"
+local shared_overrides = {
+	templates = {
+		folder = "templates",
+	},
+	attachments = {
+		img_folder = "images/",
+		img_name_func = image_name,
+		img_text_func = image_text,
+	},
+}
+
+local workspaces = function()
+	local ws = {}
+	for _, name in ipairs(vaults) do
+		table.insert(ws, {
+			name = name,
+			path = vaults_directory .. "/" .. name,
+			overrides = shared_overrides,
+		})
+	end
+	return ws
+end
+
+
+-- PLUGIN
+
 return {
 	"obsidian-nvim/obsidian.nvim",
 	version = "*",
 	lazy = true,
 	event = {
-		"BufReadPre " .. vim.fn.expand "~" .. "/vaults/**/*.md",
-		"BufNewFile " .. vim.fn.expand "~" .. "/vaults/**/*.md",
+		"BufReadPre " .. vaults_directory .. "/**/*.md",
+		"BufNewFile " .. vaults_directory .. "/**/*.md",
 	},
 
 	dependencies = {
@@ -12,67 +67,16 @@ return {
 	},
 
 	opts = {
-		workspaces = {
-			{
-				name = "notes",
-				path = "~/vaults/notes",
-				overrides = {
-					templates = {
-						folder = "templates",
-					}
-				}
-			},
-			{
-				name = "todo",
-				path = "~/vaults/todo",
-				overrides = {
-					templates = {
-						folder = "templates",
-					}
-				}
-			},
-			{
-				name = "creative",
-				path = "~/vaults/creative",
-				overrides = {
-					templates = {
-						folder = "templates",
-					}
-				}
-			},
-		},
+		workspaces = workspaces(),
 		preferred_link_style = "markdown",
 		wiki_link_func = "use_alias_only",
 		new_notes_location = "current_dir",
-		note_id_func = function(title)
-			local suffix = ""
-			if title ~= nil then
-				suffix = title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
-			end
-			return tostring(os.time()) .. "-" .. suffix
-		end,
-	},
-
-	templates = {
-		date_format = "%Y-%m-%d",
-		time_format = "%H:%M",
-	},
-
-	attachments = {
-		img_folder = "assets/images/",
-		img_name_func = function()
-			return string.format("pasted-%s", os.date "%Y%m%d%H%M%S")
-		end,
-
-		img_text_func = function(client, path)
-			path = client:vault_relative_path(path) or path
-			return string.format("![%s](%s)", path.name, path)
-		end,
-	},
-
-	statusline = {
-		enabled = true,
-		format = "{{properties}} properties, {{backlinks}} backlinks, {{words}} words",
+		note_id_func = note_id_function,
+		should_confirm = false,
+		statusline = {
+			enabled = true,
+			format = "{{properties}} properties, {{backlinks}} backlinks, {{words}} words",
+		},
 	},
 
 	config = function(plugin, opts)
@@ -92,5 +96,64 @@ return {
 
 		-- Pops up a picker of templates, choosing one inserts to current note
 		vim.keymap.set("n", "<leader>nh", ":ObsidianTemplate<CR>")
+
+		-- Pops up a picker of templates, choosing one inserts to current note
+		vim.keymap.set("n", "<leader>nh", ":ObsidianTemplate<CR>")
+
+		-- Paste an image from the clipboard
+		vim.keymap.set("n", "<leader>np", function()
+			local buffer_dir = vim.fn.fnamemodify(
+				vim.api.nvim_buf_get_name(0),
+				":p:h"
+			)
+
+			local name = image_name()
+			local cmd = string.format(
+				":ObsidianPasteImg %s/images/%s",
+				buffer_dir,
+				name
+			)
+
+			vim.cmd(cmd)
+		end)
+
+		-- Render the current markdown file with pandoc and mathjax
+		vim.keymap.set("n", "<leader>nr", function()
+			local filename = vim.fn.expand("%:p")
+			local filedir = vim.fn.fnamemodify(filename, ":p:h")
+			local base = vim.fn.fnamemodify(filename, ":t:r")
+			local output = filedir .. "/" .. base .. ".html"
+
+			local cmd = {
+				"pandoc",
+				filename,
+				"-s",
+				"--katex",
+				"-o",
+				output,
+			}
+
+			vim.notify(
+				"Rendering with Pandoc into " .. output,
+				vim.log.levels.INFO
+			)
+
+			vim.fn.jobstart(cmd, {
+				cwd = filedir,
+				on_exit = function(_, code)
+					if code == 0 then
+						vim.fn.jobstart(
+							{ "open", output },
+							{ detach = true }
+						)
+					else
+						vim.notify(
+							"Pandoc failed with exit code: " .. code,
+							vim.log.levels.ERROR
+						)
+					end
+				end,
+			})
+		end)
 	end,
 }
