@@ -100,6 +100,14 @@ return {
 		-- Pops up a picker of templates, choosing one inserts to current note
 		vim.keymap.set("n", "<leader>nh", ":ObsidianTemplate<CR>")
 
+		-- Opens excalidraw desktop for quick sketches
+		vim.keymap.set("n", "<leader>nd", function()
+			vim.fn.jobstart(
+				{ "open", "https://excalidraw.com" },
+				{ detach = true }
+			)
+		end)
+
 		-- Paste an image from the clipboard
 		vim.keymap.set("n", "<leader>np", function()
 			local buffer_dir = vim.fn.fnamemodify(
@@ -108,13 +116,53 @@ return {
 			)
 
 			local name = image_name()
-			local cmd = string.format(
-				":ObsidianPasteImg %s/images/%s",
+			local full_path = string.format(
+				"%s/images/%s",
 				buffer_dir,
 				name
 			)
 
-			vim.cmd(cmd)
+			vim.cmd(":ObsidianPasteImg " .. full_path)
+			if vim.fn.executable("magick") ~= 1 then
+				vim.notify(
+					"'magick' not found — image will not be flattened.",
+					vim.log.levels.WARN
+				)
+				return
+			end
+
+			full_path = full_path .. ".png"
+			if vim.fn.filereadable(full_path) == 0 then
+				vim.notify(
+					"Image not found after paste: " .. full_path,
+					vim.log.levels.ERROR
+				)
+				return
+			end
+
+			vim.fn.jobstart({
+				"magick",
+				full_path,
+				"-background", "white",
+				"-alpha", "remove",
+				"-alpha", "off",
+				full_path,
+			}, {
+				detach = true,
+				on_exit = function(_, code)
+					if code == 0 then
+						vim.notify(
+							"Image pasted and alpha-flattened: " .. name,
+							vim.log.levels.INFO
+						)
+					else
+						vim.notify(
+							"`magick` could not flatten pasted image: " .. name,
+							vim.log.levels.WARN
+						)
+					end
+				end,
+			})
 		end)
 
 		-- Render the current markdown file with pandoc and mathjax
@@ -129,8 +177,9 @@ return {
 				filename,
 				"-s",
 				"--katex",
-				"-o",
-				output,
+				"--standalone",
+				"-c", vim.fn.expand "~" .. "/vaults/custom.css",
+				"-o", output,
 			}
 
 			vim.notify(
