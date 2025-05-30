@@ -38,9 +38,6 @@ export EDITOR='nvim'
 # Set default git editor
 export GIT_EDITOR='nvim'
 
-# Specify tempfile directory
-export TMPDIR="$HOME/tmp"
-
 # Homebrew environment variables
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
@@ -78,16 +75,15 @@ alias ginit="git init ."
 alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
-alias todo="ultralist"
 
 # Use exa for listing
 alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
 
-# Editor
-alias zed="/Applications/Zed.app/Contents/MacOS/cli"
-
 # Nicer ytop theme
 alias ytop="ytop -as -c monokai -I 1/4"
+
+# Make quick todo note
+alias todo='touch $(date +%F).md'
 
 ############################################
 #

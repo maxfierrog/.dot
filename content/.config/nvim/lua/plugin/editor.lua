@@ -5,6 +5,33 @@ return {
 	{ 'numToStr/Comment.nvim' },
 	{ 'KeitaNakamura/tex-conceal.vim' },
 	{
+		"iamcco/markdown-preview.nvim",
+		ft = { "markdown" },
+		cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
+		build = function() vim.fn["mkdp#util#install"]() end,
+		config = function()
+			vim.g.mkdp_auto_start = 0
+			vim.g.mkdp_refresh_slow = 1
+			vim.api.nvim_create_autocmd({
+				"InsertEnter",
+				"InsertLeave",
+				"TextChangedI"
+			}, {
+				pattern = "*.md",
+				callback = function()
+					-- noop
+				end,
+			})
+		end,
+		keys = {
+			{
+				"<leader>mp",
+				"<cmd>MarkdownPreviewToggle<CR>",
+				desc = "Toggle Markdown Preview",
+			},
+		},
+	},
+	{
 		'rcarriga/nvim-notify',
 
 		lazy = false,
