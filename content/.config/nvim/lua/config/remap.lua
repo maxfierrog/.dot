@@ -109,6 +109,12 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 -- Toggle tex bindings for current filetype
 vim.keymap.set("n", "<leader>T", [[:lua toggle_tex_bindings()<CR>]], { noremap = true, silent = true })
 
+-- Insert a timestamp
+vim.keymap.set("n", "<leader>=", function()
+	local now = os.date("%Y-%m-%d %H:%M:%S")
+	vim.api.nvim_put({ now }, "c", true, true)
+end, { desc = "Insert current timestamp" })
+
 
 -- AUTOCOMMANDS
 
