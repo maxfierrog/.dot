@@ -110,10 +110,22 @@ vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
 vim.keymap.set("n", "<leader>T", [[:lua toggle_tex_bindings()<CR>]], { noremap = true, silent = true })
 
 -- Insert a timestamp
-vim.keymap.set("n", "<leader>=", function()
+vim.keymap.set("n", "<leader>-", function()
 	local now = os.date("%Y-%m-%d %H:%M:%S")
 	vim.api.nvim_put({ now }, "c", true, true)
-end, { desc = "Insert current timestamp" })
+end, { noremap = true, silent = true })
+
+-- Insert current location (IP based)
+vim.keymap.set("n", "<leader>=", function()
+	local handle = io.popen([[curl -s ipinfo.io | jq -r '.loc']])
+	if handle then
+		local coords = handle:read("*a"):gsub("\n", "")
+		handle:close()
+		vim.api.nvim_put({ coords }, "c", true, true)
+	else
+		vim.notify("Failed to fetch location.", vim.log.levels.ERROR)
+	end
+end, { noremap = true, silent = true })
 
 
 -- AUTOCOMMANDS
