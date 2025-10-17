@@ -27,6 +27,12 @@ end
 vim.g.mapleader = " "
 
 
+-- TERMINAL
+
+-- Use something obvious for exiting terminal buffers
+vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
+
+
 -- NAVIGATION
 
 -- Switch to previous buffer

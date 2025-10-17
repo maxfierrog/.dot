@@ -12,7 +12,6 @@ return {
 		config = function()
 			require("claude-code").setup({
 				window = {
-					split_ratio = 0.3,
 					position = "float",
 					float = {
 						width = "80%",
