@@ -9,7 +9,7 @@ requires-python = ">=3.11"
 dependencies = []
 
 [project.scripts]
-main = "project.scripts:main"
+main = "core.scripts:main"
 
 [tool.hatch.build.targets.wheel]
 packages = ["src/core"]
