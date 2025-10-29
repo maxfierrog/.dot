@@ -82,8 +82,8 @@ alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
 # Nicer ytop theme
 alias ytop="ytop -as -c monokai -I 1/4"
 
-# Make quick todo note
-alias todo='touch $(date +%F).md'
+# File/project watching
+alias watch="watchexec"
 
 ############################################
 #

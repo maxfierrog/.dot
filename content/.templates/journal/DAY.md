@@ -1,5 +1,0 @@
----
-timestamp:  
-location: 
----
-
