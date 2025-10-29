@@ -39,6 +39,115 @@ local function split(source, sep)
 	return result
 end
 
+local function create_template_previewer(templates_dir)
+	local previewers = require("telescope.previewers")
+	local scan = require("plenary.scandir")
+
+	return previewers.new_buffer_previewer({
+		title = "Template Contents",
+		define_preview = function(self, entry, status)
+			local template_path = templates_dir .. "/" .. entry.value
+
+			local items = scan.scan_dir(template_path, {
+				hidden = false,
+				depth = 1,
+				add_dirs = true,
+			})
+
+			table.sort(items, function(a, b)
+				local a_is_dir = vim.fn.isdirectory(a) == 1
+				local b_is_dir = vim.fn.isdirectory(b) == 1
+				if a_is_dir ~= b_is_dir then
+					return a_is_dir
+				end
+				return a < b
+			end)
+
+			local lines = {}
+			local mini_icons_ok, mini_icons = pcall(require, "mini.icons")
+
+			for _, item in ipairs(items) do
+				local name = vim.fn.fnamemodify(item, ":t")
+				local is_dir = vim.fn.isdirectory(item) == 1
+				local icon = ""
+
+				if mini_icons_ok then
+					if is_dir then
+						icon = mini_icons.get("directory", name)
+					else
+						icon = mini_icons.get("file", name)
+					end
+				else
+					icon = is_dir and "[d]" or "[f]"
+				end
+
+				table.insert(lines, icon .. " " .. name)
+			end
+
+			if #lines == 0 then
+				lines = { "(empty template)" }
+			end
+
+			vim.api.nvim_buf_set_lines(self.state.bufnr, 0, -1, false, lines)
+		end,
+	})
+end
+
+local function pick_template()
+	local templates_dir = vim.fn.expand("$TEMPLATES")
+	if templates_dir == "$TEMPLATES" or templates_dir == "" then
+		vim.notify("$TEMPLATES environment variable not set", vim.log.levels.ERROR)
+		return
+	end
+
+	local pickers = require("telescope.pickers")
+	local finders = require("telescope.finders")
+	local conf = require("telescope.config").values
+	local actions = require("telescope.actions")
+	local action_state = require("telescope.actions.state")
+
+	local scan = require("plenary.scandir")
+	local templates = scan.scan_dir(templates_dir, {
+		only_dirs = true,
+		depth = 1,
+	})
+
+	local template_names = {}
+	for _, path in ipairs(templates) do
+		table.insert(template_names, vim.fn.fnamemodify(path, ":t"))
+	end
+
+	pickers.new({}, {
+		prompt_title = "Select Template",
+		finder = finders.new_table({
+			results = template_names,
+		}),
+		sorter = conf.generic_sorter({}),
+		previewer = create_template_previewer(templates_dir),
+		attach_mappings = function(prompt_bufnr, map)
+			actions.select_default:replace(function()
+				actions.close(prompt_bufnr)
+				local selection = action_state.get_selected_entry()
+				if selection then
+					local template_name = selection[1]
+					local source = templates_dir .. "/" .. template_name
+					local dest = vim.fn.getcwd()
+
+					local cmd = string.format("cp -r '%s'/* '%s'/", source, dest)
+					local result = vim.fn.system(cmd)
+
+					if vim.v.shell_error == 0 then
+						vim.notify("Template '" .. template_name .. "' copied to current directory", vim.log.levels.INFO)
+					else
+						vim.notify("Error copying template: " .. result, vim.log.levels.ERROR)
+					end
+				end
+			end)
+			return true
+		end,
+	}):find()
+end
+
 return {
 	{
 		'goolord/alpha-nvim',
@@ -74,6 +183,11 @@ return {
 					"a",
 					"-> search all files",
 					":Telescope find_files<CR>"
+				),
+				dashboard.button(
+					"t",
+					"-> insert template",
+					function() pick_template() end
 				),
 				dashboard.button(
 					"f",
