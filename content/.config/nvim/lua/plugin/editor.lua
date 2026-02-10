@@ -82,32 +82,88 @@ return {
 
 		lazy = false,
 
-		opts = {
-			background_colour = "NotifyBackground",
-			fps = 1,
-			icons = {
-				DEBUG = "[d]",
-				ERROR = "[e]",
-				INFO = "[i]",
-				TRACE = "[t]",
-				WARN = "[w]"
-			},
-			level = 2,
-			minimum_width = 50,
-			render = "default",
-			stages = "static",
-			time_formats = {
-				notification = "%T",
-				notification_history = "%FT%T"
-			},
-			timeout = 3500,
-			top_down = true
-		},
-
-		config = function(plugin, opts)
+		config = function()
 			local notify = require('notify')
+			local stages_util = require("notify.stages.util")
+
+			notify.setup({
+				background_colour = "NotifyBackground",
+				fps = 1,
+				icons = {
+					DEBUG = "[d]",
+					ERROR = "[e]",
+					INFO = "[i]",
+					TRACE = "[t]",
+					WARN = "[w]"
+				},
+				level = 2,
+				minimum_width = 50,
+				render = "default",
+				stages = {
+					function(state)
+						local next_height = state.message.height + 2
+						local next_row = stages_util.available_slot(
+							state.open_windows,
+							next_height,
+							stages_util.DIRECTION.TOP_DOWN
+						)
+						if not next_row then
+							return nil
+						end
+						return {
+							relative = "editor",
+							anchor = "NW",
+							width = state.message.width,
+							height = state.message.height,
+							col = 0,
+							row = next_row,
+							border = "rounded",
+							style = "minimal",
+							opacity = 0,
+						}
+					end,
+					function()
+						return {
+							opacity = { 100 },
+							col = { 0 },
+						}
+					end,
+					function()
+						return {
+							col = { 0 },
+							time = true,
+						}
+					end,
+					function()
+						return {
+							width = {
+								1,
+								frequency = 2.5,
+								damping = 0.9,
+								complete = function(cur_width)
+									return cur_width < 3
+								end,
+							},
+							opacity = {
+								0,
+								frequency = 2,
+								complete = function(cur_opacity)
+									return cur_opacity <= 4
+								end,
+							},
+							col = { 0 },
+						}
+					end,
+				},
+				time_formats = {
+					notification = "%T",
+					notification_history = "%FT%T"
+				},
+				timeout = 3500,
+				top_down = true
+			})
+
 			vim.notify = notify
-			notify.setup(opts)
 		end
 	},
 	{

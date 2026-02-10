@@ -75,6 +75,7 @@ alias ginit="git init ."
 alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
+alias spotify="spotify_player"
 
 # Use exa for listing
 alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
@@ -96,3 +97,30 @@ source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 
 # uv uses a script in .local to add itself to PATH for whatever fucking reason
 . "$HOME/.local/bin/env"
+
+############################################
+#
+#              Application-Specific 
+#
+############################################
+
+# Add llvm dynamic libraries for linking purposes
+export LIBCLANG_PATH="/opt/homebrew/opt/llvm/lib"
+export DYLD_FALLBACK_LIBRARY_PATH="/opt/homebrew/opt/llvm/lib"
+
+# Link to system RocksDB (avoids recompiling from source)
+export ROCKSDB_LIB_DIR="/opt/homebrew/opt/rocksdb/lib"
+export ROCKSDB_INCLUDE_DIR="/opt/homebrew/opt/rocksdb/include"
+export ROCKSDB_DYNAMIC=1
+
+############################################
+#
+#              Secrets
+#
+############################################
+
+# Source secrets file if it exists
+if [[ -f "$HOME/.secrets" ]]; then
+    source "$HOME/.secrets"
+fi
+

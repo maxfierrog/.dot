@@ -36,7 +36,7 @@ vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { noremap = true, silent = true })
 -- NAVIGATION
 
 -- Switch to previous buffer
-vim.keymap.set("n", "<bs>", '<c-^>zz', { silent = true, noremap = true })
+vim.keymap.set("n", "\\", '<c-^>zz', { silent = true, noremap = true })
 
 -- Go 6 lines up
 vim.keymap.set({ "x", "n" }, "K", "6k", { silent = true, noremap = true })
@@ -81,7 +81,7 @@ vim.keymap.set("n", "<leader>Q", ":qa<CR>", { silent = true, noremap = true })
 vim.keymap.set({ "x", "n" }, ";", '$', { silent = true, noremap = true })
 
 -- Restore visual selection
-vim.keymap.set("n", "\\", 'gv', { silent = true, noremap = true })
+vim.keymap.set("n", "<bs>", 'gv', { silent = true, noremap = true })
 
 -- Redo
 vim.keymap.set('n', 'r', '<Cmd>redo<CR>', { noremap = true, silent = true })
