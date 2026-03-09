@@ -95,9 +95,6 @@ alias watch="watchexec"
 # If this fails, brew install zsh-syntax-highlighting
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-# uv uses a script in .local to add itself to PATH for whatever fucking reason
-. "$HOME/.local/bin/env"
-
 ############################################
 #
 #              Application-Specific 
