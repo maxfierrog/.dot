@@ -1,7 +1,7 @@
 # Ghostty Configuration
 # Migrated from Kitty configuration
 
-background = #000000
+background = #222222
 font-family = "Hasklig"
 
 # Enable ligatures

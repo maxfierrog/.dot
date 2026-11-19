@@ -45,10 +45,21 @@ keybinds clear-defaults=true {
         bind "[" { BreakPaneLeft; SwitchToMode "normal"; }
         bind "]" { BreakPaneRight; SwitchToMode "normal"; }
         bind "b" { BreakPane; SwitchToMode "normal"; }
+        bind "f" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
+                floating true
+                ignore_case true
+                quick_jump true
+                selection_color "Blue"
+            }
+            SwitchToMode "normal"
+        }
+        bind "H" { MoveTab "left"; }
         bind "h" { GoToPreviousTab; }
         bind "j" { GoToNextTab; }
         bind "k" { GoToPreviousTab; }
         bind "l" { GoToNextTab; }
+        bind "L" { MoveTab "right"; }
         bind "n" { NewTab; SwitchToMode "normal"; }
         bind "r" { SwitchToMode "renametab"; TabNameInput 0; }
         bind "s" { ToggleActiveSyncTab; SwitchToMode "normal"; }
@@ -138,19 +149,29 @@ keybinds clear-defaults=true {
         }
     }
     shared {
-        bind "Alt left" { MoveFocusOrTab "left"; }
+        bind "Alt left" { MoveFocus "left"; }
         bind "Alt down" { MoveFocus "down"; }
         bind "Alt up" { MoveFocus "up"; }
-        bind "Alt right" { MoveFocusOrTab "right"; }
-        bind "Alt h" { MoveFocusOrTab "left"; }
-        bind "Alt j" { MoveFocus "down"; }
-        bind "Alt k" { MoveFocus "up"; }
-        bind "Alt l" { MoveFocusOrTab "right"; }
+        bind "Alt right" { MoveFocus "right"; }
+        bind "Alt h" { MoveFocus "left"; }
+        bind "Alt j" { GoToNextTab; }
+        bind "Alt k" { GoToPreviousTab; }
+        bind "Alt l" { MoveFocus "right"; }
         bind "Alt m" { ToggleFloatingPanes; }
         bind "Alt t" { NewTab; }
         bind "Alt w" { CloseTab; }
     }
     shared_except "locked" {
+        // Browser-style tab management. Alt-/ opens the fuzzy tab finder;
+        // Alt-Shift-j/k (or down/up) reorders the active tab.
+        bind "Alt /" {
+            LaunchOrFocusPlugin "file:~/.config/zellij/plugins/room.wasm" {
+                floating true
+                ignore_case true
+                quick_jump true
+                selection_color "Blue"
+            }
+        }
         bind "Alt +" { Resize "Increase"; }
         bind "Alt -" { Resize "Decrease"; }
         bind "Alt =" { Resize "Increase"; }
@@ -159,8 +180,10 @@ keybinds clear-defaults=true {
         bind "Alt f" { ToggleFloatingPanes; }
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Alt i" { MoveTab "left"; }
+        bind "Alt K" "Alt Shift k" "Alt Shift up" { MoveTab "left"; }
         bind "Alt n" { NewPane; }
         bind "Alt o" { MoveTab "right"; }
+        bind "Alt J" "Alt Shift j" "Alt Shift down" { MoveTab "right"; }
         bind "Alt p" { TogglePaneInGroup; }
         bind "Alt Shift p" { ToggleGroupMarking; }
         bind "Ctrl q" { Detach; }

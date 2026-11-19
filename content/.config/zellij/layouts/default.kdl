@@ -1,20 +1,23 @@
 layout {
-	swap_floating_layout {
-		floating_panes max_panes=1 {
-			pane x="5%" y="5%" width="90%" height="90%"
-		}
-		floating_panes max_panes=2 {
-			pane x="4%" y="5%" width="45%" height="90%"
-			pane x="51%" y="5%" width="45%" height="90%"
-		}
-	}
-    pane size=1 borderless=true {
-        plugin location="tab-bar"
-    }
-    pane
-    pane size=1 borderless=true {
-        plugin location="status-bar"
+    swap_floating_layout {
+        floating_panes max_panes=1 {
+            pane x="5%" y="5%" width="90%" height="90%"
+        }
+        floating_panes max_panes=2 {
+            pane x="4%" y="5%" width="45%" height="90%"
+            pane x="51%" y="5%" width="45%" height="90%"
+        }
     }
 
+    pane split_direction="vertical" {
+        pane size=48 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zellij-vertical-tabs.wasm" {
+                format "#[fg=muted]{=47:name}"
+                format_active "#[bg=#475f94,fill]{=47:name}"
+                border "#[fg=#494949]│"
+                max_name_length 47
+            }
+        }
+        pane
+    }
 }
-
