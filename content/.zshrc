@@ -47,19 +47,14 @@ export PATH="$HOME/.juliaup/bin:$PATH"
 # Add cargo-installed binaries to PATH
 export PATH="$HOME/.cargo/bin:$PATH"
 
+# Add TinyTeX (user-local TeX Live) binaries to PATH
+export PATH="$HOME/Library/TinyTeX/bin/universal-darwin:$PATH"
+
 # Pull /usr/bin to front (brew fucks with this)
 export PATH="/usr/bin:$PATH"
 
 # Set SSH authentication socket to 1Password provision
 export SSH_AUTH_SOCK="$HOME/.1password/agent.sock"
-
-# Set up pyenv
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init -)"
-
-# Pyenv virtual environments plugin
-eval "$(pyenv virtualenv-init -)"
 
 ############################################
 #
@@ -71,11 +66,9 @@ eval "$(pyenv virtualenv-init -)"
 export TEMPLATES="$HOME/.templates"
 
 # Git aliases
-alias ginit="git init ."
 alias ga="git add"
 alias gc="git commit"
 alias gp="git push"
-alias spotify="spotify_player"
 
 # Use exa for listing
 alias exa="exa -lahTFR --group-directories-first --level=1 --no-user"
@@ -109,6 +102,17 @@ export DYLD_FALLBACK_LIBRARY_PATH="/opt/homebrew/opt/llvm/lib"
 export ROCKSDB_LIB_DIR="/opt/homebrew/opt/rocksdb/lib"
 export ROCKSDB_INCLUDE_DIR="/opt/homebrew/opt/rocksdb/include"
 export ROCKSDB_DYNAMIC=1
+
+############################################
+#
+#              Machine-Specific
+#
+############################################
+
+# Source untracked per-machine config if it exists
+if [[ -f "$HOME/.zshrc.local" ]]; then
+    source "$HOME/.zshrc.local"
+fi
 
 ############################################
 #
