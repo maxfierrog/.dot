@@ -13,9 +13,10 @@ depend on a network fetch each time Zellij starts.
 
 - `Alt-/`: fuzzy-find a tab; type to filter, use arrows or `Tab`, then `Enter`
 - `Alt-j/k`: move focus to the pane below/above; at the bottom/top edge of the
-  tab, switch to the next/previous tab
+  tab, switch to the next/previous tab (among floating panes when they are shown)
 - `Alt-m`: toggle floating panes; the first one opens centred at 90% of the
-  pane area (zellij's own percentage placement ignores the sidebar offset)
+  pane area (zellij's own percentage placement ignores the sidebar offset).
+  One or two floating panes are re-centred whenever the window is resized
 - `Alt-Shift-k/j` or `Alt-Shift-Up/Down`: move the active tab up/down
 - `Ctrl-t`, then `f`: fuzzy-find from tab mode
 - `Ctrl-t`, then `H/L`: repeatedly reorder from tab mode
@@ -29,5 +30,5 @@ need to read the tab list and switch the active tab.
 ```text
 531091b56ab3bc0008bd14de19f71985e3ab8585110ee021ef8ee413556202a2  zellij-vertical-tabs.wasm
 90b483a40b762468fb75862160587a05fbedcd5c13adcb3ed231f01bf9c072d1  room.wasm
-3c05eda2c5f993ffe68713dfc3094fce3308637a8907c00791e509360c079478  pane-helper.wasm
+20dbed3c8551cdbd8df6687b37540bdb0f76e9fa0278186ad26802dad4bf8425  pane-helper.wasm
 ```

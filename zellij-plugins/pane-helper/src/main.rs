@@ -7,8 +7,11 @@
 //! - payload "float": like `ToggleFloatingPanes`, but when the tab has no
 //!   floating pane yet, open one at 90% of the pane area, centred.
 //!
+//!   When floating panes are visible, the same edge check runs among them.
+//!
 //! - Whenever the number of floating terminal panes in a tab changes to one or
-//!   two, arrange them: one pane centred at 90%, two panes side by side.
+//!   two, or the tab's pane area is resized, arrange them: one pane centred at
+//!   90%, two panes side by side.
 //!
 //! Zellij 0.46 positions percentage-based floating panes (including
 //! `swap_floating_layout`) from column 0 rather than from the start of the
@@ -38,6 +41,8 @@ struct State {
     panes: PaneManifest,
     /// Floating terminal pane count per tab id, as last seen.
     float_counts: HashMap<usize, usize>,
+    /// Pane-area size (columns, rows) per tab id, as last seen.
+    viewports: HashMap<usize, (usize, usize)>,
 }
 
 register_plugin!(State);
@@ -82,6 +87,10 @@ fn is_tiled(p: &&PaneInfo) -> bool {
 /// Floating terminal panes; floating plugins (e.g. the tab finder) are left alone.
 fn is_floating_terminal(p: &&PaneInfo) -> bool {
     p.is_floating && !p.is_plugin && !p.is_suppressed && p.is_selectable
+}
+
+fn is_floating(p: &&PaneInfo) -> bool {
+    p.is_floating && !p.is_suppressed && p.is_selectable
 }
 
 /// Absolute coordinates for a fractional rectangle of the tab's pane area,
@@ -138,22 +147,22 @@ impl State {
         }
     }
 
-    /// Whether the focused tiled pane has a selectable pane above/below it.
+    /// Whether the focused pane has a selectable pane above/below it, within
+    /// the layer that has focus (floating panes when shown, else tiled).
     /// `None` when the layout state needed to decide is unavailable.
     fn has_neighbour(&self, direction: Direction) -> Option<bool> {
         let tab = self.active_tab()?;
-        if tab.are_floating_panes_visible {
-            return None;
-        }
-        if tab.is_fullscreen_active {
+        let panes = self.panes.panes.get(&tab.position)?;
+        let floating = tab.are_floating_panes_visible && panes.iter().filter(is_floating).next().is_some();
+        if !floating && tab.is_fullscreen_active {
             return Some(false);
         }
-        let focused = self.focused_tiled_pane(tab)?;
+        let layer: fn(&&PaneInfo) -> bool = if floating { is_floating } else { is_tiled };
+        let focused = panes.iter().filter(layer).find(|p| p.is_focused)?;
         let (top, bottom) = (focused.pane_y, focused.pane_y + focused.pane_rows);
         let (left, right) = (focused.pane_x, focused.pane_x + focused.pane_columns);
 
-        let panes = self.panes.panes.get(&tab.position)?;
-        Some(panes.iter().filter(is_tiled).any(|p| {
+        Some(panes.iter().filter(layer).any(|p| {
             let distinct = p.id != focused.id || p.is_plugin != focused.is_plugin;
             let overlaps = p.pane_x < right && left < p.pane_x + p.pane_columns;
             let beyond = match direction {
@@ -191,17 +200,27 @@ impl State {
     }
 
     /// Re-arrange a tab's floating terminals when their count changes to 1 or 2,
-    /// the way a `swap_floating_layout` would. A tab seen for the first time
-    /// only records its count, so existing arrangements are left untouched.
+    /// the way a `swap_floating_layout` would, or when the pane area is resized
+    /// (zellij rescales floating panes from column 0, ignoring the sidebar).
+    /// A tab seen for the first time only records its state, so existing
+    /// arrangements are left untouched.
     fn arrange_floating(&mut self) {
         let mut moves = Vec::new();
         let mut counts = HashMap::new();
+        let mut viewports = HashMap::new();
         for tab in &self.tabs {
             let panes = self.floating_terminals(tab);
             let count = panes.len();
+            let viewport = (tab.viewport_columns, tab.viewport_rows);
             counts.insert(tab.tab_id, count);
-            let previous = self.float_counts.get(&tab.tab_id).copied();
-            if previous.map_or(true, |prev| prev == count) {
+            viewports.insert(tab.tab_id, viewport);
+            let (Some(prev_count), Some(prev_viewport)) = (
+                self.float_counts.get(&tab.tab_id).copied(),
+                self.viewports.get(&tab.tab_id).copied(),
+            ) else {
+                continue;
+            };
+            if prev_count == count && prev_viewport == viewport {
                 continue;
             }
             let fracs: &[Frac] = match count {
@@ -218,6 +237,7 @@ impl State {
         // Only trust counts once both tab and pane state have arrived.
         if !self.tabs.is_empty() && !self.panes.panes.is_empty() {
             self.float_counts = counts;
+            self.viewports = viewports;
         }
         if !moves.is_empty() {
             change_floating_panes_coordinates(moves);
