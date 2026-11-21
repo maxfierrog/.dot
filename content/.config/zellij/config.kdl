@@ -25,7 +25,10 @@ keybinds clear-defaults=true {
         bind "Ctrl p" { SwitchToMode "normal"; }
         bind "r" { NewPane "right"; SwitchToMode "normal"; }
         bind "s" { NewPane "stacked"; SwitchToMode "normal"; }
-        bind "w" { ToggleFloatingPanes; SwitchToMode "normal"; }
+        bind "w" {
+            MessagePlugin "file:~/.config/zellij/plugins/pane-helper.wasm" { payload "float"; }
+            SwitchToMode "normal"
+        }
         bind "z" { TogglePaneFrames; SwitchToMode "normal"; }
     }
     tab {
@@ -154,10 +157,16 @@ keybinds clear-defaults=true {
         bind "Alt up" { MoveFocus "up"; }
         bind "Alt right" { MoveFocus "right"; }
         bind "Alt h" { MoveFocus "left"; }
-        bind "Alt j" { GoToNextTab; }
-        bind "Alt k" { GoToPreviousTab; }
+        bind "Alt j" {
+            MessagePlugin "file:~/.config/zellij/plugins/pane-helper.wasm" { payload "down"; }
+        }
+        bind "Alt k" {
+            MessagePlugin "file:~/.config/zellij/plugins/pane-helper.wasm" { payload "up"; }
+        }
         bind "Alt l" { MoveFocus "right"; }
-        bind "Alt m" { ToggleFloatingPanes; }
+        bind "Alt m" {
+            MessagePlugin "file:~/.config/zellij/plugins/pane-helper.wasm" { payload "float"; }
+        }
         bind "Alt t" { NewTab; }
         bind "Alt w" { CloseTab; }
     }
@@ -177,7 +186,9 @@ keybinds clear-defaults=true {
         bind "Alt =" { Resize "Increase"; }
         bind "Alt [" { PreviousSwapLayout; }
         bind "Alt ]" { NextSwapLayout; }
-        bind "Alt f" { ToggleFloatingPanes; }
+        bind "Alt f" {
+            MessagePlugin "file:~/.config/zellij/plugins/pane-helper.wasm" { payload "float"; }
+        }
         bind "Ctrl g" { SwitchToMode "locked"; }
         bind "Alt i" { MoveTab "left"; }
         bind "Alt K" "Alt Shift k" "Alt Shift up" { MoveTab "left"; }
@@ -276,7 +287,7 @@ keybinds clear-defaults=true {
     }
 }
 themes {
-    default {
+    dot-grey {
         text_unselected {
             base 170 170 170
             background 34 34 34
@@ -350,6 +361,14 @@ themes {
             emphasis_3 204 102 136
         }
         frame_selected {
+            base 170 170 170
+            background 0
+            emphasis_0 170 170 170
+            emphasis_1 51 170 204
+            emphasis_2 204 102 136
+            emphasis_3 0
+        }
+        frame_unselected {
             base 73 73 73
             background 0
             emphasis_0 170 170 170
@@ -419,6 +438,10 @@ plugins {
 // eg. "file:/path/to/my-plugin.wasm"
 // eg. "https://example.com/my-plugin.wasm"
 load_plugins {
+    // Keybind helpers: up/down pane focus that falls through to the
+    // previous/next tab, a centred floating-pane toggle, and floating-pane
+    // arrangement (replaces swap_floating_layout, which ignores the sidebar).
+    "file:~/.config/zellij/plugins/pane-helper.wasm"
 }
 ui {
     pane_frames {
@@ -485,6 +508,9 @@ web_client {
 //   - false
 // 
 pane_frames true
+pane_frame_style "full"
+stacked_pane_list false
+theme "dot-grey"
  
 // When attaching to an existing session with other users,
 // should the session be mirrored (true)
